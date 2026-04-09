@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#e8521a">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="default">
+<meta name="apple-mobile-web-app-title" content="Asiasie">
+<meta name="description" content="Horaire officiel du Festival Asiasie 2026 — Montréal">
+<link rel="manifest" href="manifest.json">
+<title>Horaire — Festival Asiasie 2026</title>
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+  :root {
+    --cream:  #f0ebe0;
+    --beige:  #e8e0cc;
+    --orange: #e8521a;
+    --brown:  #9b7d3a;
+    --blue:   #a8b8d8;
+    --text:   #1a1208;
+    --muted:  #7a6a4a;
+    --border: rgba(26,18,8,0.12);
+    --red:    #c0160a;
+  }
+  html { scroll-behavior: smooth; }
+  body {
+    background: var(--cream); color: var(--text);
+    font-family: -apple-system, BlinkMacSystemFont, 'Helvetica Neue', Arial, sans-serif;
+    min-height: 100vh; -webkit-text-size-adjust: 100%; overscroll-behavior: none;
+  }
+
+  /* TICKER */
+  .ticker { background: var(--orange); color: #fff; font-size: 11px; font-weight: 700; letter-spacing: 0.12em; text-transform: uppercase; padding: 7px 0; white-space: nowrap; overflow: hidden; }
+  .ticker-inner { display: inline-block; animation: scroll 24s linear infinite; }
+  .ticker-inner span { margin: 0 24px; }
+  @keyframes scroll { 0%{transform:translateX(0)} 100%{transform:translateX(-50%)} }
+
+  /* HEADER */
+  header { padding: 14px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1.5px solid var(--text); gap: 10px; position: sticky; top: 0; background: var(--cream); z-index: 50; }
+  .logo-svg { height: 28px; width: auto; display: block; flex-shrink: 0; }
+  .logo-svg path, .logo-svg rect, .logo-svg polygon { fill: var(--text); }
+  .header-right { display: flex; align-items: center; gap: 8px; flex-shrink: 0; }
+  .clock { font-size: 12px; font-weight: 700; letter-spacing: 0.05em; color: var(--muted); font-variant-numeric: tabular-nums; }
+  .live-pill { display: flex; align-items: center; gap: 5px; background: var(--orange); color: #fff; font-size: 10px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; padding: 5px 10px; border-radius: 20px; white-space: nowrap; }
+  .live-dot { width: 6px; height: 6px; border-radius: 50%; background: #fff; animation: blink 2s infinite; flex-shrink: 0; }
+  @keyframes blink { 0%,100%{opacity:1} 50%{opacity:0.3} }
+
+  /* INSTALL BANNER */
+  #install-bar {
+    background: var(--text); color: var(--cream);
+    padding: 10px 20px;
+    display: none;
+    align-items: center; gap: 10px;
+    border-bottom: 1.5px solid var(--text);
+  }
+  #install-bar.visible { display: flex; }
+  .install-icon { font-size: 20px; flex-shrink: 0; }
+  .install-text { flex: 1; min-width: 0; }
+  .install-text strong { font-size: 12px; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; display: block; }
+  .install-text span { font-size: 11px; opacity: 0.65; }
+  .install-btn {
+    background: var(--orange); color: #fff;
+    border: none; border-radius: 6px;
+    padding: 7px 14px;
+    font-size: 11px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase;
+    cursor: pointer; white-space: nowrap; flex-shrink: 0;
+    -webkit-tap-highlight-color: transparent;
+  }
+  .install-dismiss {
+    background: transparent; border: none; color: var(--cream);
+    font-size: 18px; cursor: pointer; opacity: 0.5; padding: 0 2px;
+    flex-shrink: 0; line-height: 1;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  /* iOS GUIDE */
+  #ios-guide {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    background: var(--cream);
+    border-top: 1.5px solid var(--text);
+    border-radius: 16px 16px 0 0;
+    z-index: 200;
+    padding: 20px 20px calc(20px + env(safe-area-inset-bottom, 0px));
+    transform: translateY(100%);
+    transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1);
+    max-width: 520px;
+  }
+  #ios-guide.open { transform: translateY(0); }
+  .ios-handle { width: 36px; height: 4px; border-radius: 2px; background: rgba(26,18,8,0.2); margin: 0 auto 16px; }
+  .ios-guide-title { font-size: 15px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.05em; margin-bottom: 16px; }
+  .ios-step { display: flex; align-items: flex-start; gap: 12px; margin-bottom: 14px; }
+  .ios-step-num { width: 26px; height: 26px; border-radius: 50%; background: var(--orange); color: #fff; font-size: 12px; font-weight: 900; display: flex; align-items: center; justify-content: center; flex-shrink: 0; margin-top: 1px; }
+  .ios-step-text { font-size: 14px; line-height: 1.5; color: var(--text); }
+  .ios-step-text strong { font-weight: 800; }
+  .ios-share-icon { display: inline-block; width: 18px; height: 18px; vertical-align: middle; margin: 0 2px; }
+  .ios-close { display: block; width: 100%; margin-top: 16px; padding: 14px; background: var(--text); color: var(--cream); border: none; border-radius: 8px; font-size: 12px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  #ios-overlay { position: fixed; inset: 0; background: rgba(26,18,8,0.4); z-index: 199; display: none; }
+  #ios-overlay.open { display: block; }
+
+  /* PAGE TITLE */
+  .page-title { padding: 14px 20px 0; }
+  .page-title h1 { font-size: 10px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--orange); }
+  .page-title .sub { font-size: 10px; color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 2px; }
+
+  /* COUNTDOWN */
+  #countdown-wrap { padding: 14px 20px; border-bottom: 1.5px solid var(--border); }
+  .countdown-label { font-size: 10px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); margin-bottom: 10px; }
+  .countdown-units { display: flex; gap: 8px; }
+  .cunit { background: var(--text); color: var(--cream); border-radius: 6px; padding: 10px 12px; flex: 1; text-align: center; min-width: 0; }
+  .cunit .num { font-size: clamp(20px, 6vw, 32px); font-weight: 900; font-variant-numeric: tabular-nums; line-height: 1; }
+  .cunit .lbl { font-size: 8px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; opacity: 0.5; margin-top: 4px; }
+
+  main { padding: 14px 20px 80px; }
+
+  /* DAY TABS */
+  .day-tabs { display: grid; grid-template-columns: repeat(4,1fr); margin-bottom: 14px; border: 1.5px solid var(--text); border-radius: 8px; overflow: hidden; }
+  .day-tab { padding: 9px 4px; background: transparent; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 0.04em; text-transform: uppercase; cursor: pointer; border: none; border-right: 1px solid var(--text); transition: all 0.12s; text-align: center; line-height: 1.3; -webkit-tap-highlight-color: transparent; }
+  .day-tab:last-child { border-right: none; }
+  .day-tab.active { background: var(--orange); color: #fff; }
+
+  /* LEGEND */
+  .legend { display: flex; gap: 6px; flex-wrap: wrap; margin-bottom: 14px; }
+  .legend-btn { padding: 5px 10px; border-radius: 20px; border: 1.5px solid var(--text); background: transparent; color: var(--muted); font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; display: flex; align-items: center; gap: 5px; transition: all 0.12s; white-space: nowrap; -webkit-tap-highlight-color: transparent; }
+  .legend-btn.a-all     { background: var(--text);   border-color: var(--text);   color: var(--cream); }
+  .legend-btn.a-scene   { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .legend-btn.a-atelier { background: var(--brown);  border-color: var(--brown);  color: #fff; }
+  .legend-btn.a-eaton   { background: var(--blue);   border-color: var(--blue);   color: var(--text); }
+  .pip { width: 7px; height: 7px; border-radius: 50%; flex-shrink: 0; }
+
+  /* NOW BANNER */
+  .now-banner { background: var(--orange); border-radius: 8px; padding: 12px 14px; margin-bottom: 14px; display: flex; align-items: flex-start; gap: 10px; color: #fff; }
+  .now-tag { background: #fff; color: var(--orange); font-size: 9px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; padding: 3px 8px; border-radius: 8px; flex-shrink: 0; margin-top: 1px; }
+  .now-body { flex: 1; min-width: 0; }
+  .now-name { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.3; }
+  .now-sub  { font-size: 11px; opacity: 0.8; margin-top: 2px; }
+  .now-lieu { font-size: 10px; font-weight: 700; opacity: 0.75; margin-top: 4px; text-transform: uppercase; letter-spacing: 0.04em; }
+
+  /* TIMELINE */
+  #timeline { position: relative; }
+  .hour-label { font-size: 10px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); margin: 16px 0 6px; padding-bottom: 5px; border-bottom: 1px solid var(--border); }
+
+  /* EVENT */
+  .event { display: flex; align-items: flex-start; gap: 10px; padding: 11px 12px 11px 14px; border: 1.5px solid var(--text); border-radius: 8px; background: var(--cream); margin-bottom: 6px; position: relative; overflow: hidden; cursor: pointer; transition: background 0.1s, transform 0.1s, opacity 0.15s; -webkit-tap-highlight-color: transparent; user-select: none; }
+  .event:active { transform: scale(0.985); background: var(--beige); }
+  .event.is-live { background: var(--orange); border-color: var(--orange); color: #fff; }
+  .event.is-live .event-time, .event.is-live .event-sub, .event.is-live .event-arrow { color: rgba(255,255,255,0.75); }
+  .event.is-live .lieu-badge { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.5); }
+  .event.is-past { opacity: 0.3; }
+  .stripe { position: absolute; left: 0; top: 0; bottom: 0; width: 3px; }
+  .s-scene { background: var(--orange); } .s-atelier { background: var(--brown); } .s-eaton { background: var(--blue); }
+  .event.is-live .stripe { background: rgba(255,255,255,0.35); }
+  .event-time { font-size: 11px; color: var(--muted); font-weight: 700; min-width: 54px; flex-shrink: 0; padding-top: 1px; font-variant-numeric: tabular-nums; line-height: 1.4; }
+  .event-body { flex: 1; min-width: 0; }
+  .event-name { font-size: clamp(12px, 3.2vw, 13px); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.35; }
+  .event-sub { font-size: 11px; color: var(--muted); margin-top: 3px; font-weight: 500; line-height: 1.4; }
+  .event-right { display: flex; flex-direction: column; align-items: flex-end; gap: 4px; flex-shrink: 0; }
+  .lieu-badge { font-size: 9px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; padding: 3px 8px; border-radius: 8px; border: 1.5px solid; white-space: nowrap; }
+  .b-scene { background: rgba(232,82,26,0.1); color: var(--orange); border-color: var(--orange); }
+  .b-atelier { background: rgba(155,125,58,0.1); color: var(--brown); border-color: var(--brown); }
+  .b-eaton { background: rgba(168,184,216,0.25); color: #4a6090; border-color: #7898c8; }
+  .live-badge { font-size: 9px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: #fff; color: var(--orange); padding: 2px 7px; border-radius: 6px; }
+  .event-arrow { font-size: 14px; color: var(--muted); line-height: 1; margin-top: 2px; }
+
+  /* NEEDLE */
+  #time-needle { position: absolute; left: 0; right: 0; pointer-events: none; z-index: 10; display: flex; align-items: center; }
+  .needle-label { background: var(--red); color: #fff; font-size: 9px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; padding: 2px 6px; border-radius: 3px; white-space: nowrap; flex-shrink: 0; }
+  .needle-line { flex: 1; height: 2px; background: var(--red); }
+
+  .empty-state { text-align: center; padding: 48px 0; font-size: 11px; font-weight: 800; letter-spacing: 0.1em; text-transform: uppercase; color: var(--muted); }
+
+  footer { border-top: 1.5px solid var(--text); padding: 14px 20px; font-size: 10px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); display: flex; justify-content: space-between; flex-wrap: wrap; gap: 6px; }
+
+  /* DRAWER */
+  .drawer-overlay { position: fixed; inset: 0; background: rgba(26,18,8,0.5); z-index: 100; opacity: 0; pointer-events: none; transition: opacity 0.28s ease; }
+  .drawer-overlay.open { opacity: 1; pointer-events: all; }
+  .drawer { position: fixed; bottom: 0; left: 0; right: 0; background: var(--cream); border-radius: 16px 16px 0 0; border-top: 1.5px solid var(--text); z-index: 101; max-height: 85vh; overflow-y: auto; overscroll-behavior: contain; transform: translateY(100%); transition: transform 0.32s cubic-bezier(0.32, 0.72, 0, 1); padding-bottom: env(safe-area-inset-bottom, 20px); -webkit-overflow-scrolling: touch; }
+  .drawer.open { transform: translateY(0); }
+  .drawer-handle-wrap { display: flex; justify-content: center; padding: 12px 0 8px; cursor: pointer; position: sticky; top: 0; background: var(--cream); z-index: 1; border-bottom: 0.5px solid var(--border); }
+  .drawer-handle { width: 36px; height: 4px; border-radius: 2px; background: rgba(26,18,8,0.2); }
+  .drawer-header { padding: 16px 20px 12px; border-bottom: 1px solid var(--border); }
+  .drawer-lieu-badge { display: inline-block; font-size: 9px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; padding: 3px 10px; border-radius: 10px; border: 1.5px solid; margin-bottom: 10px; }
+  .drawer-time { font-size: 12px; color: var(--muted); font-weight: 700; font-variant-numeric: tabular-nums; margin-bottom: 6px; }
+  .drawer-title { font-size: clamp(18px, 5vw, 22px); font-weight: 900; text-transform: uppercase; letter-spacing: 0.04em; line-height: 1.2; color: var(--text); }
+  .drawer-artist { font-size: 13px; color: var(--muted); margin-top: 6px; font-weight: 500; line-height: 1.4; }
+  .drawer-body { padding: 16px 20px 24px; }
+  .drawer-desc { font-size: 15px; color: var(--text); line-height: 1.65; font-weight: 400; }
+  .drawer-tags { display: flex; gap: 6px; flex-wrap: wrap; margin-top: 16px; }
+  .drawer-tag { font-size: 10px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; padding: 4px 12px; border-radius: 14px; border: 1.5px solid var(--border); color: var(--muted); }
+  .drawer-close { display: block; width: 100%; margin: 16px 0 0; padding: 14px; background: var(--text); color: var(--cream); font-size: 12px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 8px; cursor: pointer; -webkit-tap-highlight-color: transparent; }
+  .drawer.is-live .drawer-header { background: var(--orange); }
+  .drawer.is-live .drawer-title { color: #fff; }
+  .drawer.is-live .drawer-time { color: rgba(255,255,255,0.75); }
+  .drawer.is-live .drawer-artist { color: rgba(255,255,255,0.8); }
+  .drawer.is-live .drawer-lieu-badge { background: rgba(255,255,255,0.2) !important; color: #fff !important; border-color: rgba(255,255,255,0.5) !important; }
+
+  /* DESKTOP */
+  @media (min-width: 640px) {
+    header, main, .page-title, #countdown-wrap, footer, #install-bar { padding-left: 32px; padding-right: 32px; }
+    .logo-svg { height: 34px; }
+    .day-tab { font-size: 11px; padding: 10px; }
+    .event { padding: 13px 14px 13px 16px; gap: 14px; }
+    .event-time { min-width: 68px; font-size: 12px; }
+    .drawer, #ios-guide { max-width: 520px; left: 50%; right: auto; transform: translateX(-50%) translateY(100%); border-radius: 16px 16px 0 0; }
+    .drawer.open, #ios-guide.open { transform: translateX(-50%) translateY(0); }
+  }
+  @media (max-width: 360px) { .event-right .lieu-badge { display: none; } }
+</style>
+</head>
+<body>
+
+<div class="ticker">
+  <div class="ticker-inner">
+    <span>FESTIVAL ASIASIE 2026</span><span>7 — 10 MAI</span><span>TIME OUT MARKET</span><span>CENTRE EATON</span><span>MONTRÉAL</span>
+    <span>FESTIVAL ASIASIE 2026</span><span>7 — 10 MAI</span><span>TIME OUT MARKET</span><span>CENTRE EATON</span><span>MONTRÉAL</span>
+  </div>
+</div>
+
+<!-- INSTALL BAR -->
+<div id="install-bar">
+  <div class="install-icon">📲</div>
+  <div class="install-text">
+    <strong>Installer l'app</strong>
+    <span>Accès rapide depuis ton écran d'accueil</span>
+  </div>
+  <button class="install-btn" id="install-btn" onclick="triggerInstall()">Installer</button>
+  <button class="install-dismiss" onclick="dismissInstall()" aria-label="Fermer">×</button>
+</div>
+
+<header>
+  <svg class="logo-svg" viewBox="0 0 1152.78 275.35" xmlns="http://www.w3.org/2000/svg" aria-label="Asiasie">
+    <rect x="412.53" y="5.12" width="59.25" height="265.73"/>
+    <rect x="909.03" y="5.12" width="59.25" height="265.73"/>
+    <path d="M589.91,0c-45.2-.15-90.42,29.27-93.41,88.64l.03,182.21h60v-108.67h66.75v108.67h60l.03-182.21C680.32,29.27,635.11-.15,589.91,0ZM622.89,123.83h-65.96v-37.47c0-18.38,7.29-46.98,32.98-46.98s32.98,28.61,32.98,46.98v37.47Z"/>
+    <path d="M93.41,0C48.21-.15,2.99,29.27,0,88.64l.03,182.21h60v-108.67h66.75v108.67h60l.03-182.21C183.82,29.27,138.61-.15,93.41,0ZM126.39,123.83H60.43v-37.47c0-18.38,7.29-46.98,32.98-46.98s32.98,28.61,32.98,46.98v37.47Z"/>
+    <polygon points="1053.03 43.47 1152.78 43.47 1152.78 5.12 993.78 5.12 993.78 105.67 993.78 137.59 993.78 138.38 993.78 270.85 1152.78 270.85 1152.78 232.5 1053.03 232.5 1053.03 153.97 1149.03 153.97 1149.03 138.38 1149.03 137.59 1149.03 122.01 1149.03 115.61 1053.03 115.61 1053.03 105.67 1053.03 43.47"/>
+    <path d="M890.85,195.23c.06-4.62-.23-9.36-.93-14.21h-.1c.13.91.26,1.81.37,2.74.45,3.96.65,7.77.66,11.47Z"/>
+    <path d="M890.19,183.76c-.11-.94-.24-1.84-.37-2.74-2.88-20.38-11.37-33.61-22.79-42.93-25.55-20.85-65.75-22.22-90.51-40.56-23.63-17.5-17.83-56.07,9.99-59.42,28.48-3.43,43.27,22.47,42.28,54.68h60.75c-.28-83.99-80.85-104.05-135-85.38-35.92,12.38-60.31,50.85-47.6,97.21,4.14,15.11,12.09,25.62,22.1,33.47,24.85,19.48,62.4,22.51,86,38.56,6.75,4.59,11.31,10.69,13.9,17.25,6.49,18.67-2.26,40.77-23.29,43.3-29.26,3.52-44.46-23.09-43.44-56.18h-62.42c0,.42.02.84.02,1.26.6,47.24,26.13,74.54,58.2,86.24,25.79,9.41,55.81,8.74,80.49.23,6.43-2.22,12.5-5.26,18.08-9,20.38-12.88,34.42-34.08,34.29-64.51-.02-3.69-.22-7.5-.66-11.47Z"/>
+    <path d="M393.71,183.68c-.11-.94-.24-1.84-.37-2.74-2.88-20.38-11.37-33.61-22.79-42.93-25.55-20.85-65.75-22.22-90.51-40.56-23.63-17.5-17.83-56.07,9.99-59.42,28.48-3.43,43.27,22.47,42.28,54.68h60.75c-.28-83.99-80.85-104.05-135-85.38-35.92,12.38-60.31,50.85-47.6,97.21,4.14,15.11,12.09,25.62,22.1,33.47,24.85,19.48,62.4,22.51,86,38.56,6.75,4.59,11.31,10.69,13.9,17.25,6.49,18.67-2.26,40.77-23.29,43.3-29.26,3.52-44.46-23.09-43.44-56.18h-62.42c0,.42.02.84.02,1.26.6,47.24,26.13,74.54,58.2,86.24,25.79,9.41,55.81,8.74,80.49.23,6.43-2.22,12.5-5.26,18.08-9,20.38-12.88,34.42-34.08,34.29-64.51-.02-3.69-.22-7.5-.66-11.47Z"/>
+  </svg>
+  <div class="header-right">
+    <div class="clock" id="clock">--:--</div>
+    <div class="live-pill"><div class="live-dot"></div>Temps réel</div>
+  </div>
+</header>
+
+<div class="page-title">
+  <h1>Festival Asiasie — Programmation officielle</h1>
+  <div class="sub">7 – 10 mai 2026 · Time Out Market &amp; Centre Eaton · Montréal</div>
+</div>
+
+<div id="countdown-wrap"></div>
+
+<main>
+  <div class="day-tabs" id="dayTabs"></div>
+  <div class="legend" id="legend"></div>
+  <div id="nowBanner"></div>
+  <div id="timeline"></div>
+</main>
+
+<footer>
+  <span>Festival Asiasie 2026</span>
+  <span>asiasie.com</span>
+</footer>
+
+<!-- iOS GUIDE -->
+<div id="ios-overlay" onclick="closeIosGuide()"></div>
+<div id="ios-guide">
+  <div class="ios-handle"></div>
+  <div class="ios-guide-title">Ajouter à l'écran d'accueil</div>
+  <div class="ios-step">
+    <div class="ios-step-num">1</div>
+    <div class="ios-step-text">Appuie sur le bouton <strong>Partager</strong>
+      <svg class="ios-share-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+      en bas de ton écran Safari
+    </div>
+  </div>
+  <div class="ios-step">
+    <div class="ios-step-num">2</div>
+    <div class="ios-step-text">Fais défiler et appuie sur <strong>« Sur l'écran d'accueil »</strong></div>
+  </div>
+  <div class="ios-step">
+    <div class="ios-step-num">3</div>
+    <div class="ios-step-text">Appuie sur <strong>« Ajouter »</strong> en haut à droite — c'est fait !</div>
+  </div>
+  <button class="ios-close" onclick="closeIosGuide()">Compris !</button>
+</div>
+
+<!-- DRAWER -->
+<div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
+<div class="drawer" id="drawer" role="dialog" aria-modal="true">
+  <div class="drawer-handle-wrap" onclick="closeDrawer()"><div class="drawer-handle"></div></div>
+  <div class="drawer-header" id="drawerHeader"></div>
+  <div class="drawer-body" id="drawerBody"></div>
+</div>
+
+<script>
+// ── PWA / INSTALL ──
+let deferredPrompt = null;
+const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
+const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
+const dismissed = sessionStorage.getItem('install-dismissed');
+
+if (!isStandalone && !dismissed) {
+  if (isIOS) {
+    setTimeout(() => {
+      document.getElementById('install-bar').classList.add('visible');
+      document.getElementById('install-btn').textContent = 'Comment ?';
+      document.getElementById('install-btn').onclick = showIosGuide;
+    }, 2000);
+  } else {
+    window.addEventListener('beforeinstallprompt', e => {
+      e.preventDefault();
+      deferredPrompt = e;
+      setTimeout(() => document.getElementById('install-bar').classList.add('visible'), 1500);
+    });
+  }
+}
+
+function triggerInstall() {
+  if (!deferredPrompt) return;
+  deferredPrompt.prompt();
+  deferredPrompt.userChoice.then(() => {
+    deferredPrompt = null;
+    document.getElementById('install-bar').classList.remove('visible');
+  });
+}
+
+function dismissInstall() {
+  sessionStorage.setItem('install-dismissed', '1');
+  document.getElementById('install-bar').classList.remove('visible');
+}
+
+function showIosGuide() {
+  document.getElementById('ios-overlay').classList.add('open');
+  document.getElementById('ios-guide').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeIosGuide() {
+  document.getElementById('ios-overlay').classList.remove('open');
+  document.getElementById('ios-guide').classList.remove('open');
+  document.body.style.overflow = '';
+  dismissInstall();
+}
+
+// ── SERVICE WORKER ──
+if ('serviceWorker' in navigator) {
+  navigator.serviceWorker.register('./sw.js').catch(() => {});
+}
+
+// ── DATA ──
+const FESTIVAL_START = new Date("2026-05-07T13:00:00");
+const FESTIVAL_END   = new Date("2026-05-10T16:00:00");
+const DAYS=[
+  {label:"Jeu 7",date:"2026-05-07"},{label:"Ven 8",date:"2026-05-08"},
+  {label:"Sam 9",date:"2026-05-09"},{label:"Dim 10",date:"2026-05-10"},
+];
+const LIEUX=[
+  {key:"scene",label:"Scène",full:"Time Out Market — Scène"},
+  {key:"atelier",label:"Atelier",full:"Time Out Market — Atelier"},
+  {key:"eaton",label:"Centre Eaton",full:"Centre Eaton"},
+];
+const EVENTS={
+  "2026-05-07":[
+    {start:"13:00",end:"13:20",lieu:"scene",name:"Présentation organisme",note:"Ouverture officielle",desc:"Coup d'envoi du Festival Asiasie 2026 avec une présentation de l'organisme et de sa mission. Découvrez le travail accompli tout au long de l'année pour célébrer et valoriser les cultures asiatiques à Montréal.",tags:["Gratuit","Tout public","Français"]},
+    {start:"17:00",end:"21:00",lieu:"scene",name:"CBC Photobooth",note:"Ouvert toute la soirée",desc:"Immortalisez votre passage au festival avec le photobooth officiel de CBC/Radio-Canada ! Des décors festifs aux couleurs du festival vous attendent pour des souvenirs inoubliables. Impressions disponibles sur place.",tags:["Gratuit","Tout public","Photo"]},
+    {start:"17:30",end:"18:00",lieu:"scene",name:"Arrivée des invités",desc:"Accueil des invités spéciaux, partenaires et dignitaires pour la soirée d'ouverture. Un moment de réseautage convivial avant le lancement officiel des festivités.",tags:["Sur invitation"]},
+    {start:"18:00",end:"19:00",lieu:"scene",name:"Cérémonie d'ouverture",desc:"La cérémonie d'ouverture officielle du Festival Asiasie 2026 réunit artistes, partenaires et public pour marquer le début de quatre jours de célébration. Discours, performances symboliques et moments forts au programme.",tags:["Gratuit","Tout public","Cérémonie"]},
+    {start:"18:30",end:"19:30",lieu:"scene",name:"Performances d'ouverture",desc:"Une série de performances artistiques variées pour lancer le festival en beauté. Danse, musique et arts de la scène inspirés des traditions asiatiques se succèdent pour accueillir les festivaliers dans une ambiance festive et colorée.",tags:["Gratuit","Tout public","Arts de la scène"]},
+    {start:"19:00",end:"20:00",lieu:"atelier",name:"Atelier de saké — Introduction",note:"Kuniko Fujita (Madame Saké au Québec)",desc:"Plongez dans l'univers fascinant du saké avec Kuniko Fujita, ambassadrice du saké au Québec. Cet atelier d'introduction vous guide à travers l'histoire, la fabrication et la dégustation de ce breuvage japonais millénaire.",tags:["Places limitées","18+","Dégustation","Japon"]},
+    {start:"20:00",end:"20:20",lieu:"scene",name:"Présentation organisme",desc:"Présentation d'un organisme communautaire de la diaspora asiatique montréalaise. Une occasion de découvrir leur mission, leurs actions et de tisser des liens avec la communauté.",tags:["Gratuit","Tout public","Communauté"]},
+  ],
+  "2026-05-08":[
+    {start:"13:00",end:"14:00",lieu:"scene",name:"Présentation organisme",desc:"Rencontrez un organisme engagé auprès des communautés asiatiques de Montréal. Au programme : présentation de leurs programmes, témoignages et échanges avec le public.",tags:["Gratuit","Tout public","Français"]},
+    {start:"13:00",end:"14:00",lieu:"atelier",name:"Atelier de Matcha",note:"Par Madame Matcha",desc:"Initiation à la cérémonie du thé matcha avec Madame Matcha, experte reconnue. Apprenez les gestes traditionnels de préparation, les secrets d'un bon matcha et dégustez en pleine conscience. Matériel fourni.",tags:["Places limitées","Dégustation","Japon","Bien-être"]},
+    {start:"15:00",end:"16:00",lieu:"scene",name:"Soundcheck OMA",desc:"Préparation technique de la scène principale pour la performance d'OMA en soirée. Zone réservée à l'équipe technique et aux artistes.",tags:["Équipe technique","Non public"]},
+    {start:"18:00",end:"20:00",lieu:"scene",name:"Open Mic Asiatique",desc:"La scène est ouverte à tous les artistes de la diaspora asiatique ! Poésie, slam, chanson, stand-up — toutes les formes d'expression sont bienvenues. Inscription sur place disponible.",tags:["Gratuit","Tout public","Participation","Bilingue"]},
+    {start:"19:00",end:"20:00",lieu:"atelier",name:"Atelier de saké — Avancé",note:"Kuniko Fujita (Madame Saké au Québec)",desc:"Pour ceux qui ont déjà une base en dégustation de saké, cet atelier avancé explore les régions productrices du Japon, les différents styles de saké et les accords mets-saké.",tags:["Places limitées","18+","Niveau intermédiaire","Japon"]},
+    {start:"20:00",end:"21:00",lieu:"scene",name:"DJ Set",desc:"Soirée musicale avec un DJ set aux sonorités fusion — K-pop, J-pop, électro asiatique et hits internationaux. La piste de danse est ouverte !",tags:["Gratuit","18+","Musique","Danse"]},
+  ],
+  "2026-05-09":[
+    {start:"13:00",end:"14:30",lieu:"scene",name:"Table ronde — Effets du mouvement anti-immigration",note:"Discussion ouverte",desc:"Une discussion franche et nécessaire sur les impacts du mouvement anti-immigration sur les immigrants et les communautés racisées au Québec. Des témoignages, des analyses et des pistes d'action seront partagés.",tags:["Gratuit","Tout public","Discussion","Français/Anglais"]},
+    {start:"13:00",end:"14:30",lieu:"atelier",name:"Atelier de thé — Dégustation de 20 thés",note:"Han Le (Thés Guru) · Chine, Taiwan, Vietnam, Japon, Sri-Lanka, Inde",desc:"Un voyage sensoriel à travers 20 thés soigneusement sélectionnés par Han Le de Thés Guru. De la Chine au Sri-Lanka en passant par le Vietnam et le Japon, chaque thé raconte une histoire de terroir et de tradition.",tags:["Places limitées","Dégustation","Asie","Thé"]},
+    {start:"14:00",end:"15:00",lieu:"eaton",name:"Balterz & friends / RPD",note:"Balterz (15 min) + RPD (45 min)",desc:"Double performance au Centre Eaton avec Balterz et ses collaborateurs pour une mise en bouche de 15 minutes, suivie de RPD pour 45 minutes. Hip-hop, spoken word et danse contemporaine.",tags:["Gratuit","Tout public","Hip-hop","Danse"]},
+    {start:"14:30",end:"15:30",lieu:"eaton",name:"Atelier Nerikiri",note:"KOTOAN",desc:"Initiez-vous à l'art du nerikiri, la confiserie traditionnelle japonaise sculptée à la main. Vous créerez vos propres wagashi en pâte de haricots blancs colorée. Chaque participant repart avec ses créations.",tags:["Places limitées","Tout public","Japon","Artisanat"]},
+    {start:"15:00",end:"16:00",lieu:"eaton",name:"Asia Pop Performance",desc:"Une explosion de culture pop asiatique ! Reprises de chorégraphies K-pop, J-pop et C-pop par des groupes montréalais passionnés.",tags:["Gratuit","Tout public","K-pop","J-pop"]},
+    {start:"16:00",end:"17:00",lieu:"scene",name:"Rassemblement de tenues traditionnelles d'Asie",desc:"Un défilé vivant célébrant la richesse des costumes traditionnels d'Asie. Kimonos, hanbok, áo dài, qipaos et bien d'autres tenues portés fièrement par des membres de la communauté.",tags:["Gratuit","Tout public","Mode","Patrimoine"]},
+    {start:"17:00",end:"21:00",lieu:"scene",name:"CBC Photobooth",note:"Ouvert toute la soirée",desc:"Le photobooth CBC/Radio-Canada est de retour ! Profitez des décors thématiques pour créer des souvenirs avec vos proches. Impressions instantanées sur place.",tags:["Gratuit","Tout public","Photo"]},
+    {start:"19:00",end:"20:00",lieu:"atelier",name:"Atelier de saké — Introduction",note:"Kuniko Fujita (Madame Saké au Québec)",desc:"Plongez dans l'univers fascinant du saké avec Kuniko Fujita, ambassadrice du saké au Québec. Histoire, fabrication et dégustation de ce breuvage japonais millénaire.",tags:["Places limitées","18+","Dégustation","Japon"]},
+  ],
+  "2026-05-10":[
+    {start:"12:30",end:"13:00",lieu:"scene",name:"Danse du lion",note:"Montreal Legacy Lion Dance & Wushu Team",desc:"Un spectacle traditionnel de danse du lion par la Montreal Legacy Lion Dance & Wushu Team. La danse du lion est une tradition millénaire qui chasse les mauvais esprits et attire la chance et la prospérité.",tags:["Gratuit","Tout public","Chine","Tradition"]},
+    {start:"12:45",end:"13:15",lieu:"scene",name:"Présentation — Montreal Legacy",note:"Montreal Legacy Lion Dance & Wushu Team",desc:"La Montreal Legacy Lion Dance & Wushu Team présente son histoire, ses disciplines et son travail de transmission culturelle. Démonstration de wushu et échanges avec le public.",tags:["Gratuit","Tout public","Wushu","Chine"]},
+    {start:"13:00",end:"14:30",lieu:"scene",name:"Table ronde",desc:"Table ronde avec des représentants des communautés asiatiques de Montréal. Sujets d'actualité, enjeux communautaires et visions pour l'avenir dans une discussion ouverte et participative.",tags:["Gratuit","Tout public","Discussion","Bilingue"]},
+    {start:"13:00",end:"14:00",lieu:"atelier",name:"Atelier de Matcha",note:"Par Madame Matcha",desc:"Dernière session de l'atelier de matcha pour cette édition 2026. Initiation à la cérémonie du thé japonaise — gestes, posture et philosophie derrière cette pratique ancestrale.",tags:["Places limitées","Dégustation","Japon","Bien-être"]},
+    {start:"14:00",end:"14:45",lieu:"eaton",name:"Veils of Bollywood — Atelier danse interactive",note:"30 min",desc:"Rejoignez Veils of Bollywood pour un atelier de danse bollywoodienne interactif ! Aucune expérience requise — venez vous amuser et apprendre quelques mouvements emblématiques dans une ambiance festive.",tags:["Gratuit","Tout public","Bollywood","Inde","Participatif"]},
+    {start:"14:30",end:"15:30",lieu:"atelier",name:"Atelier Nerikiri",note:"KOTOAN",desc:"Dernière session de l'atelier de nerikiri avec KOTOAN. Sculptez vos propres confiseries japonaises traditionnelles en pâte de haricots blancs colorée. Un atelier zen et créatif.",tags:["Places limitées","Tout public","Japon","Artisanat"]},
+    {start:"15:00",end:"15:30",lieu:"scene",name:"Arashi Daiko",note:"Tako",desc:"Clôture explosive du Festival Asiasie 2026 avec Arashi Daiko — Tako ! La percussion taiko japonaise dans toute sa puissance et sa majesté. Un final vibrant qui résonnera longtemps dans la mémoire des festivaliers.",tags:["Gratuit","Tout public","Japon","Percussion","Clôture"]},
+  ],
+};
+
+let activeDay=0,activeLieu="all";
+function toMin(t){const[h,m]=t.split(":").map(Number);return h*60+m;}
+function nowMin(){const n=new Date();return n.getHours()*60+n.getMinutes();}
+function pad(n){return String(n).padStart(2,"0");}
+function isToday(ds){const t=new Date(),d=new Date(ds+"T12:00:00");return t.getFullYear()===d.getFullYear()&&t.getMonth()===d.getMonth()&&t.getDate()===d.getDate();}
+function evStatus(ev){if(!isToday(DAYS[activeDay].date))return"upcoming";const nm=nowMin(),s=toMin(ev.start),e=toMin(ev.end);if(nm>=s&&nm<e)return"live";if(nm>=e)return"past";return"upcoming";}
+
+function renderCountdown(){
+  const wrap=document.getElementById("countdown-wrap"),now=new Date();
+  if(now>=FESTIVAL_START){wrap.innerHTML="";return;}
+  const ts=Math.floor((FESTIVAL_START-now)/1000);
+  const d=Math.floor(ts/86400),h=Math.floor((ts%86400)/3600),m=Math.floor((ts%3600)/60),s=ts%60;
+  wrap.innerHTML=`<div style="padding:14px 20px;border-bottom:1.5px solid var(--border);">
+    <div class="countdown-label">Le festival commence dans</div>
+    <div class="countdown-units">
+      <div class="cunit"><div class="num">${pad(d)}</div><div class="lbl">Jours</div></div>
+      <div class="cunit"><div class="num">${pad(h)}</div><div class="lbl">Heures</div></div>
+      <div class="cunit"><div class="num">${pad(m)}</div><div class="lbl">Min</div></div>
+      <div class="cunit"><div class="num">${pad(s)}</div><div class="lbl">Sec</div></div>
+    </div>
+  </div>`;
+}
+function renderClock(){const n=new Date();document.getElementById("clock").textContent=pad(n.getHours())+":"+pad(n.getMinutes());}
+function renderDayTabs(){document.getElementById("dayTabs").innerHTML=DAYS.map((d,i)=>`<button class="day-tab ${i===activeDay?"active":""}" onclick="selectDay(${i})">${d.label}${isToday(d.date)?"<br>●":""}</button>`).join("");}
+function renderLegend(){
+  const evs=EVENTS[DAYS[activeDay].date]||[],pres=new Set(evs.map(e=>e.lieu));
+  const pc={scene:"var(--orange)",atelier:"var(--brown)",eaton:"var(--blue)"};
+  let h=`<button class="legend-btn ${activeLieu==="all"?"a-all":""}" onclick="setLieu('all')">Tous</button>`;
+  LIEUX.forEach(l=>{if(pres.has(l.key))h+=`<button class="legend-btn ${activeLieu===l.key?"a-"+l.key:""}" onclick="setLieu('${l.key}')"><div class="pip" style="background:${pc[l.key]}"></div>${l.label}</button>`;});
+  document.getElementById("legend").innerHTML=h;
+}
+function renderNowBanner(){
+  const b=document.getElementById("nowBanner");
+  if(!isToday(DAYS[activeDay].date)){b.innerHTML="";return;}
+  const ev=(EVENTS[DAYS[activeDay].date]||[]).find(e=>evStatus(e)==="live");
+  if(!ev){b.innerHTML="";return;}
+  const lieu=LIEUX.find(l=>l.key===ev.lieu);
+  b.innerHTML=`<div class="now-banner"><span class="now-tag">En cours</span><div class="now-body"><div class="now-name">${ev.name}</div>${ev.note?`<div class="now-sub">${ev.note}</div>`:""}<div class="now-lieu">${lieu?lieu.full:""}</div></div></div>`;
+}
+function renderTimeline(){
+  const c=document.getElementById("timeline");
+  let evs=(EVENTS[DAYS[activeDay].date]||[]).filter(e=>activeLieu==="all"||e.lieu===activeLieu).sort((a,b)=>toMin(a.start)-toMin(b.start));
+  if(!evs.length){c.innerHTML=`<div class="empty-state">Aucun événement pour cette sélection.</div>`;return;}
+  let html="",lastH=null;
+  evs.forEach((ev,idx)=>{
+    const h=ev.start.split(":")[0]+"h";
+    if(h!==lastH){html+=`<div class="hour-label">${h}</div>`;lastH=h;}
+    const st=evStatus(ev),lieu=LIEUX.find(l=>l.key===ev.lieu);
+    html+=`<div class="event ${st==="live"?"is-live":""} ${st==="past"?"is-past":""}" data-start="${ev.start}" data-end="${ev.end}" onclick="openDrawer('${DAYS[activeDay].date}',${idx})">
+      <div class="stripe s-${ev.lieu}"></div>
+      <div class="event-time">${ev.start}<br><span style="font-weight:500;opacity:0.5;font-size:10px;">${ev.end}</span></div>
+      <div class="event-body"><div class="event-name">${ev.name}</div>${ev.note?`<div class="event-sub">${ev.note}</div>`:""}</div>
+      <div class="event-right"><span class="lieu-badge b-${ev.lieu}">${lieu?lieu.label:ev.lieu}</span>${st==="live"?'<span class="live-badge">Live</span>':""}<span class="event-arrow">›</span></div>
+    </div>`;
+  });
+  c.innerHTML=html;placeNeedle();
+}
+function placeNeedle(){
+  const c=document.getElementById("timeline"),old=document.getElementById("time-needle");if(old)old.remove();
+  if(!isToday(DAYS[activeDay].date))return;
+  const nm=nowMin(),now=new Date(),label=pad(now.getHours())+":"+pad(now.getMinutes());
+  const cards=c.querySelectorAll(".event[data-start]");if(!cards.length)return;
+  let placed=false;
+  cards.forEach(card=>{if(placed)return;const s=toMin(card.dataset.start),e=toMin(card.dataset.end);if(nm>=s&&nm<e){insertNeedle(c,card.offsetTop+Math.round(card.offsetHeight*(nm-s)/(e-s)),label);placed=true;}});
+  if(!placed){let best=Infinity,target=null;cards.forEach(card=>{const s=toMin(card.dataset.start);if(nm<s&&s-nm<best){best=s-nm;target=card;}});if(target&&best<120)insertNeedle(c,target.offsetTop,label);}
+}
+function insertNeedle(c,top,label){const n=document.createElement("div");n.id="time-needle";n.style.top=top+"px";n.innerHTML=`<div class="needle-label">${label}</div><div class="needle-line"></div>`;c.appendChild(n);}
+
+let touchStartY=0,drawerScrollY=0;
+function openDrawer(date,idx){
+  const evs=(EVENTS[date]||[]).sort((a,b)=>toMin(a.start)-toMin(b.start)),ev=evs[idx];if(!ev)return;
+  const lieu=LIEUX.find(l=>l.key===ev.lieu),st=evStatus(ev);
+  const bc={scene:"b-scene",atelier:"b-atelier",eaton:"b-eaton"}[ev.lieu]||"";
+  document.getElementById("drawerHeader").innerHTML=`
+    <span class="drawer-lieu-badge ${bc}">${lieu?lieu.full:ev.lieu}</span>
+    <div class="drawer-time">${ev.start} – ${ev.end}</div>
+    <div class="drawer-title">${ev.name}</div>
+    ${ev.note?`<div class="drawer-artist">${ev.note}</div>`:""}
+    ${st==="live"?`<div style="margin-top:8px;display:inline-flex;align-items:center;gap:6px;background:rgba(255,255,255,0.2);padding:4px 10px;border-radius:20px;font-size:10px;font-weight:900;letter-spacing:0.08em;text-transform:uppercase;color:#fff;"><div class="live-dot"></div>En ce moment</div>`:""}`;
+  const tags=(ev.tags||[]).map(t=>`<span class="drawer-tag">${t}</span>`).join("");
+  document.getElementById("drawerBody").innerHTML=`<div class="drawer-desc">${ev.desc||"Description à venir."}</div>${tags?`<div class="drawer-tags">${tags}</div>`:""}<button class="drawer-close" onclick="closeDrawer()">Fermer</button>`;
+  const drawer=document.getElementById("drawer");
+  drawer.className="drawer "+(st==="live"?"is-live":"");
+  drawer.scrollTop=0;
+  requestAnimationFrame(()=>{document.getElementById("drawerOverlay").classList.add("open");drawer.classList.add("open");document.body.style.overflow="hidden";});
+}
+function closeDrawer(){document.getElementById("drawerOverlay").classList.remove("open");document.getElementById("drawer").classList.remove("open");document.body.style.overflow="";}
+document.getElementById("drawer").addEventListener("touchstart",e=>{touchStartY=e.touches[0].clientY;drawerScrollY=document.getElementById("drawer").scrollTop;},{passive:true});
+document.getElementById("drawer").addEventListener("touchmove",e=>{if(e.touches[0].clientY-touchStartY>60&&drawerScrollY<=0)closeDrawer();},{passive:true});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawer();closeIosGuide();}});
+
+function selectDay(i){activeDay=i;activeLieu="all";render();}
+function setLieu(l){activeLieu=l;render();}
+function render(){renderDayTabs();renderLegend();renderNowBanner();renderTimeline();renderClock();}
+render();
+setInterval(()=>{renderCountdown();renderClock();},1000);
+setInterval(()=>{renderNowBanner();renderTimeline();},60000);
+</script>
+</body>
+</html>
