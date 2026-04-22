@@ -15,8 +15,8 @@
   *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
   :root {
     /* ── Exact Asiasie brand colors from site ── */
-    --cream:  #ede8da;   /* warm beige background */
-    --beige:  #e2dcc8;   /* slightly darker beige */
+    --cream:  #ffffff;   /* white background */
+    --beige:  #f5f3ee;   /* slightly off-white for hover */
     --orange: #f06118;   /* vivid festival orange */
     --brown:  #8c6e2a;   /* golden brown (text on cards) */
     --blue:   #9fb3d4;   /* muted blue */
@@ -75,9 +75,9 @@
   #ios-overlay.open { display: block; }
 
   /* PAGE TITLE */
-  .page-title { padding: 20px 20px 0; }
-  .page-title h1 { font-size: 12px; font-weight: 900; letter-spacing: 0.14em; text-transform: uppercase; color: var(--orange); }
-  .page-title .sub { font-size: 12px; color: var(--muted); font-weight: 600; letter-spacing: 0.06em; text-transform: uppercase; margin-top: 4px; }
+  .page-title { padding: 28px 20px 0; }
+  .page-title h1 { font-size: clamp(26px, 7vw, 42px); font-weight: 900; letter-spacing: 0.01em; text-transform: uppercase; color: var(--text); line-height: 1.1; }
+  .page-title .sub { font-size: clamp(13px, 3.5vw, 18px); color: var(--muted); font-weight: 600; letter-spacing: 0.02em; margin-top: 8px; }
 
   /* COUNTDOWN */
   #countdown-wrap { padding: 20px 20px; border-bottom: 1.5px solid var(--border); }
@@ -123,7 +123,8 @@
 
   /* EVENT */
   .event { display: flex; align-items: flex-start; gap: 14px; padding: 16px 14px 16px 18px; border: 1.5px solid var(--text); border-radius: 10px; background: var(--cream); margin-bottom: 10px; position: relative; overflow: hidden; cursor: pointer; transition: background 0.1s, transform 0.1s, opacity 0.15s; -webkit-tap-highlight-color: transparent; user-select: none; }
-  .event:active { transform: scale(0.985); background: var(--beige); }
+  .event:active { transform: scale(0.985); background: #e2dcc8; }
+  .event:hover { background: #ede8da; }
   .event.is-live { background: var(--orange); border-color: var(--orange); color: #fff; }
   .event.is-live .event-time, .event.is-live .event-sub, .event.is-live .event-arrow { color: rgba(255,255,255,0.75); }
   .event.is-live .lieu-badge { background: rgba(255,255,255,0.2); color: #fff; border-color: rgba(255,255,255,0.5); }
