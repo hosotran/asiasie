@@ -159,31 +159,22 @@
   .event-body { flex: 1; min-width: 0; }
   .event-name { font-size: clamp(14px, 4vw, 16px); font-weight: 800; text-transform: uppercase; letter-spacing: 0.03em; line-height: 1.3; }
   .event-sub { font-size: 13px; color: var(--muted); margin-top: 5px; font-weight: 500; line-height: 1.45; }
-  
-  /* Zone de droite optimisée pour le cœur */
-  .event-right { display: flex; flex-direction: column; align-items: flex-end; justify-content: space-between; gap: 8px; flex-shrink: 0; margin-left: 10px; }
+  .event-right { display: flex; flex-direction: column; align-items: flex-end; gap: 5px; flex-shrink: 0; }
 
-  /* ── HEART BUTTON OPTIMISÉ MOBILE ── */
+  /* ── HEART BUTTON ── */
   .heart-btn {
     background: none; border: none; cursor: pointer;
-    padding: 8px; line-height: 1;
-    margin: -8px -8px 0 0;
+    padding: 3px; line-height: 1;
     -webkit-tap-highlight-color: transparent;
     transition: transform 0.15s;
     flex-shrink: 0;
-    z-index: 5;
   }
   .heart-btn:active { transform: scale(1.3); }
-  .heart-btn svg { width: 26px; height: 26px; display: block; }
+  .heart-btn svg { width: 24px; height: 24px; display: block; }
   .heart-btn svg path { transition: fill 0.15s, stroke 0.15s; }
   .heart-btn.faved svg path { fill: var(--heart); stroke: var(--heart); }
   .heart-btn:not(.faved) svg path { fill: none; stroke: var(--muted); }
-  
-  .event.is-live .heart-btn:not(.faved) svg path { 
-    stroke: rgba(255,255,255,0.9); 
-    stroke-width: 2.5px;
-  }
-  
+  .event.is-live .heart-btn:not(.faved) svg path { stroke: rgba(255,255,255,0.6); }
   .heart-btn.pop { animation: heartpop 0.35s ease; }
   @keyframes heartpop { 0%{transform:scale(1)} 40%{transform:scale(1.5)} 70%{transform:scale(0.85)} 100%{transform:scale(1)} }
 
@@ -192,6 +183,7 @@
   .b-atelier { background: rgba(140,110,42,0.1); color: var(--brown); border-color: var(--brown); }
   .b-eaton { background: rgba(159,179,212,0.25); color: #4a6090; border-color: #7898c8; }
   .live-badge { font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: #fff; color: var(--orange); padding: 3px 8px; border-radius: 6px; }
+  .event-arrow { font-size: 18px; color: var(--muted); line-height: 1; }
 
   /* NEEDLE */
   #time-needle { position: absolute; left: 0; right: 0; pointer-events: none; z-index: 10; display: flex; align-items: center; }
@@ -604,7 +596,7 @@ function openDrawer(date, evId){
 function closeDrawer(){document.getElementById("drawerOverlay").classList.remove("open");document.getElementById("drawer").classList.remove("open");document.body.style.overflow="";currentDrawerEvId=null;}
 document.getElementById("drawer").addEventListener("touchstart",e=>{window._tsy=e.touches[0].clientY;window._dsy=document.getElementById("drawer").scrollTop;},{passive:true});
 document.getElementById("drawer").addEventListener("touchmove",e=>{if(e.touches[0].clientY-window._tsy>60&&window._dsy<=0)closeDrawer();},{passive:true});
-document.addEventListener("keydown",e=>{if(e.key===\"Escape\"){closeDrawer();closeIosGuide();}});
+document.addEventListener("keydown",e=>{if(e.key==="Escape"){closeDrawer();closeIosGuide();}});
 
 function selectDay(i){activeDay=i;activeLieu="all";render();}
 function setLieu(l){activeLieu=l;render();}
