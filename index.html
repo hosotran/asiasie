@@ -61,10 +61,27 @@ header {
   min-width: 0;
 }
 
-  /* FAVS BUTTON in header */
-  .favs-toggle { display: flex; align-items: center; gap: 5px; background: transparent; border: 1.5px solid var(--text); border-radius: 20px; padding: 6px 13px; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; color: var(--muted); cursor: pointer; white-space: nowrap; -webkit-tap-highlight-color: transparent; transition: all 0.15s; }
-  .favs-toggle.active { background: var(--heart); border-color: var(--heart); color: #fff; }
-  .favs-toggle svg { width: 12px; height: 12px; flex-shrink: 0; }
+.favs-toggle { 
+  display: flex; 
+  align-items: center; 
+  gap: 5px; 
+  background: transparent; 
+  border: 1.5px solid var(--text); 
+  border-radius: 20px; 
+  padding: 6px 10px; 
+  font-size: 11px; 
+  font-weight: 800; 
+  letter-spacing: 0.06em; 
+  text-transform: uppercase; 
+  color: var(--muted); 
+  cursor: pointer; 
+  white-space: nowrap; 
+  -webkit-tap-highlight-color: transparent; 
+  transition: all 0.15s;
+  max-width: 44px; /* icône seulement sur mobile */
+  overflow: hidden;
+}
+.favs-toggle span { display: none; } /* cacher le label sur mobile */
 
   /* INSTALL BANNER */
   #install-bar { background: var(--text); color: var(--cream); padding: 10px 20px; display: none; align-items: center; gap: 10px; border-bottom: 1.5px solid var(--text); }
