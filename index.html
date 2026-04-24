@@ -314,6 +314,81 @@
     .event-name { font-size: 13px; }
     .page-title h1 { font-size: 24px; }
   }
+
+  /* ── BOTTOM NAV ── */
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0;
+    display: flex; border-top: 1.5px solid var(--text);
+    background: var(--cream); z-index: 60;
+    padding-bottom: env(safe-area-inset-bottom, 0px);
+  }
+  main { padding-bottom: 80px !important; }
+  .nav-item {
+    flex: 1; display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 10px 4px; cursor: pointer; position: relative;
+    border: none; background: transparent; font-family: inherit;
+    border-right: 1px solid rgba(26,18,8,0.1);
+    -webkit-tap-highlight-color: transparent; touch-action: manipulation;
+    transition: background 0.12s;
+  }
+  .nav-item:last-child { border-right: none; }
+  .nav-item:active { background: #ede8da; }
+  .nav-item.nav-on { background: #f8f6f1; }
+  .nav-item svg { width: 20px; height: 20px; stroke: var(--muted); transition: stroke 0.12s; display: block; fill: none; }
+  .nav-item.nav-on svg { stroke: var(--orange); }
+  .nav-label { font-size: 9px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.07em; color: var(--muted); }
+  .nav-item.nav-on .nav-label { color: var(--orange); }
+  .nav-active-dot { width: 4px; height: 4px; border-radius: 50%; background: var(--orange); position: absolute; top: 7px; }
+  .nav-fav-badge {
+    position: absolute; top: 5px; right: calc(50% - 20px);
+    background: var(--heart); color: #fff; font-size: 8px; font-weight: 900;
+    min-width: 14px; height: 14px; border-radius: 7px; padding: 0 3px;
+    display: none; align-items: center; justify-content: center;
+    border: 1.5px solid var(--cream);
+  }
+  .nav-fav-badge.show { display: flex; }
+
+  /* ── CARTE PLACEHOLDER ── */
+  #cartePanel {
+    display: none; position: fixed; inset: 0; z-index: 55;
+    background: var(--cream); flex-direction: column;
+    padding-bottom: 65px;
+  }
+  #cartePanel.show { display: flex; }
+  .carte-header {
+    padding: 14px 16px; display: flex; align-items: center; gap: 12px;
+    border-bottom: 1.5px solid var(--text); background: var(--cream); flex-shrink: 0;
+  }
+  .carte-back { background: none; border: none; font-size: 22px; cursor: pointer; color: var(--text); padding: 0; -webkit-tap-highlight-color: transparent; line-height: 1; }
+  .carte-header-title { font-size: 14px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.06em; flex: 1; }
+  .carte-body { flex: 1; display: flex; flex-direction: column; align-items: center; justify-content: center; padding: 32px 24px; gap: 20px; text-align: center; }
+  .carte-icon-big { width: 80px; height: 80px; border-radius: 50%; background: var(--orange); display: flex; align-items: center; justify-content: center; }
+  .carte-icon-big svg { width: 40px; height: 40px; }
+  .carte-coming-title { font-size: 22px; font-weight: 900; text-transform: uppercase; letter-spacing: 0.04em; }
+  .carte-coming-sub { font-size: 14px; color: var(--muted); font-weight: 500; line-height: 1.65; max-width: 280px; }
+  .carte-lieux { display: flex; gap: 8px; flex-wrap: wrap; justify-content: center; }
+  .carte-lieu-pill { padding: 6px 14px; border-radius: 20px; border: 1.5px solid var(--border); font-size: 11px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.06em; color: var(--muted); }
+  .carte-lieu-pill.tom { background: rgba(240,97,24,0.08); color: var(--orange); border-color: var(--orange); }
+  .carte-lieu-pill.ce  { background: rgba(159,179,212,0.2); color: #4a6090; border-color: #9fb3d4; }
+
+  /* ── SHARE PANEL ── */
+  #shareOverlay { position: fixed; inset: 0; z-index: 210; display: none; align-items: flex-end; justify-content: center; background: rgba(26,18,8,0.5); }
+  #shareOverlay.show { display: flex; }
+  .share-sheet { background: var(--cream); border-radius: 16px 16px 0 0; border-top: 1.5px solid var(--text); width: 100%; max-width: 520px; padding: 0 0 calc(20px + env(safe-area-inset-bottom,0px)); animation: slideup 0.3s cubic-bezier(0.32,0.72,0,1); }
+  @keyframes slideup { from{transform:translateY(100%)} to{transform:translateY(0)} }
+  .share-pull { display: flex; justify-content: center; padding: 12px 0 8px; cursor: pointer; }
+  .share-pull-pill { width: 36px; height: 4px; border-radius: 2px; background: rgba(26,18,8,0.18); }
+  .share-title { font-size: 11px; font-weight: 900; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); padding: 0 20px 12px; border-bottom: 1px solid var(--border); }
+  .share-options { padding: 12px 16px; display: flex; flex-direction: column; gap: 8px; }
+  .share-opt { display: flex; align-items: center; gap: 14px; padding: 14px 16px; border: 1.5px solid var(--text); border-radius: 10px; background: var(--cream); cursor: pointer; font-family: inherit; -webkit-tap-highlight-color: transparent; touch-action: manipulation; transition: background 0.1s; text-align: left; width: 100%; }
+  .share-opt:active { background: #ede8da; }
+  .share-opt-icon { width: 40px; height: 40px; border-radius: 10px; display: flex; align-items: center; justify-content: center; flex-shrink: 0; }
+  .share-opt-icon svg { width: 20px; height: 20px; }
+  .share-opt-label { font-size: 13px; font-weight: 800; text-transform: uppercase; letter-spacing: 0.04em; color: var(--text); }
+  .share-opt-sub { font-size: 11px; color: var(--muted); margin-top: 2px; font-weight: 500; }
+  .share-cancel { display: block; width: calc(100% - 32px); margin: 4px 16px 0; padding: 15px; background: var(--text); color: var(--cream); font-size: 12px; font-weight: 900; letter-spacing: 0.1em; text-transform: uppercase; border: none; border-radius: 10px; cursor: pointer; font-family: inherit; }
+  .share-copied { display: none; text-align: center; font-size: 11px; font-weight: 800; color: #16a34a; padding: 6px; letter-spacing: 0.06em; text-transform: uppercase; }
+  .share-copied.show { display: block; }
 </style>
 </head>
 <body>
@@ -370,7 +445,85 @@
   <div id="timeline"></div>
 </main>
 
-<footer><span>Festival Asiasie 2026</span><span>asiasie.com</span></footer>
+<!-- BOTTOM NAV -->
+<nav class="bottom-nav">
+  <button class="nav-item nav-on" id="navHoraire" onclick="navTo('horaire')">
+    <div class="nav-active-dot"></div>
+    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="3" y="4" width="18" height="18" rx="2"/><line x1="16" y1="2" x2="16" y2="6"/><line x1="8" y1="2" x2="8" y2="6"/><line x1="3" y1="10" x2="21" y2="10"/></svg>
+    <span class="nav-label">Horaire</span>
+  </button>
+  <button class="nav-item" id="navCarte" onclick="navTo('carte')">
+    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 1 8 8c0 5.25-8 13-8 13S4 15.25 4 10a8 8 0 0 1 8-8z"/></svg>
+    <span class="nav-label">Carte</span>
+  </button>
+  <button class="nav-item" id="navFavoris" onclick="navTo('favoris')">
+    <div class="nav-fav-badge" id="navFavBadge"></div>
+    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/></svg>
+    <span class="nav-label">Favoris</span>
+  </button>
+  <button class="nav-item" id="navPartager" onclick="openShare()">
+    <svg viewBox="0 0 24 24" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><circle cx="18" cy="5" r="3"/><circle cx="6" cy="12" r="3"/><circle cx="18" cy="19" r="3"/><line x1="8.59" y1="13.51" x2="15.42" y2="17.49"/><line x1="15.41" y1="6.51" x2="8.59" y2="10.49"/></svg>
+    <span class="nav-label">Partager</span>
+  </button>
+</nav>
+
+<!-- CARTE PLACEHOLDER PANEL -->
+<div id="cartePanel">
+  <div class="carte-header">
+    <button class="carte-back" onclick="navTo('horaire')">←</button>
+    <div class="carte-header-title">Plan des marchands</div>
+  </div>
+  <div class="carte-body">
+    <div class="carte-icon-big">
+      <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="10" r="3"/><path d="M12 2a8 8 0 0 1 8 8c0 5.25-8 13-8 13S4 15.25 4 10a8 8 0 0 1 8-8z"/></svg>
+    </div>
+    <div class="carte-coming-title">Carte interactive</div>
+    <div class="carte-coming-sub">La carte des kiosques et marchands sera disponible ici. 30 marchands répartis dans les deux lieux.</div>
+    <div class="carte-lieux">
+      <span class="carte-lieu-pill tom">Time Out Market — 18 marchands</span>
+      <span class="carte-lieu-pill ce">Centre Eaton — 12 marchands</span>
+    </div>
+  </div>
+</div>
+
+<!-- SHARE PANEL -->
+<div id="shareOverlay" onclick="closeShare()">
+  <div class="share-sheet" onclick="event.stopPropagation()">
+    <div class="share-pull" onclick="closeShare()"><div class="share-pull-pill"></div></div>
+    <div class="share-title">Partager l'horaire</div>
+    <div class="share-options">
+      <button class="share-opt" onclick="doShare('native')">
+        <div class="share-opt-icon" style="background:var(--orange)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
+        </div>
+        <div>
+          <div class="share-opt-label">Partager via…</div>
+          <div class="share-opt-sub">SMS, WhatsApp, Mail, Messenger…</div>
+        </div>
+      </button>
+      <button class="share-opt" onclick="doShare('copy')">
+        <div class="share-opt-icon" style="background:var(--text)">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
+        </div>
+        <div>
+          <div class="share-opt-label">Copier le lien</div>
+          <div class="share-opt-sub">asiasie.com/horaire</div>
+        </div>
+      </button>
+      <button class="share-opt" onclick="doShare('install')">
+        <div class="share-opt-icon" style="background:#16a34a">
+          <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+        </div>
+        <div>
+          <div class="share-opt-label">Ajouter à l'écran d'accueil</div>
+          <div class="share-opt-sub">Installer l'app — gratuit, zéro App Store</div>
+        </div>
+      </button>
+    </div>
+    <div class="share-copied" id="shareCopied">✓ Lien copié !</div>
+    <button class="share-cancel" onclick="closeShare()">Fermer</button>
+  </div>
+</div>
 
 <div id="ios-overlay" onclick="closeIosGuide()"></div>
 <div id="ios-guide">
@@ -683,6 +836,106 @@ function render(){
 render();
 setInterval(()=>{renderCountdown();renderClock();},1000);
 setInterval(()=>{renderNowBanner();renderTimeline();},60000);
+
+// ── BOTTOM NAV ──
+const NAV_IDS = ['navHoraire','navCarte','navFavoris','navPartager'];
+let currentNav = 'horaire';
+
+function navTo(section) {
+  currentNav = section;
+  // Update nav button states
+  NAV_IDS.forEach(id => {
+    const btn = document.getElementById(id);
+    if (!btn) return;
+    const match = id.replace('nav','').toLowerCase() === section;
+    btn.classList.toggle('nav-on', match);
+    const dot = btn.querySelector('.nav-active-dot');
+    if (dot) dot.style.display = match ? 'block' : 'none';
+  });
+  // Show/hide panels
+  document.getElementById('cartePanel').classList.toggle('show', section === 'carte');
+  // Favoris: toggle favs mode and switch to horaire view
+  if (section === 'favoris') {
+    if (!favsMode) { favsMode = true; document.getElementById('navHoraire').classList.add('nav-on'); document.getElementById('navFavoris').classList.add('nav-on'); }
+    const lbl = document.getElementById('favsLabel');
+    if (lbl) lbl.textContent = 'Tous les événements';
+    document.getElementById('favsToggle').classList.add('active');
+    render();
+    currentNav = 'horaire';
+  } else if (section === 'horaire') {
+    // Turn off favs mode when tapping Horaire
+    if (favsMode) { favsMode = false; document.getElementById('favsToggle').classList.remove('active'); const lbl = document.getElementById('favsLabel'); if(lbl) { const count=favCount(); lbl.textContent=count>0?`Coups de cœur (${count})`:'Mes coups de cœur'; } render(); }
+  }
+  // Partager handled by openShare
+}
+
+// Hide active dot on all by default except current
+document.querySelectorAll('.nav-active-dot').forEach(d => d.style.display = 'none');
+document.querySelector('#navHoraire .nav-active-dot').style.display = 'block';
+
+// ── SHARE ──
+function openShare() {
+  document.getElementById('shareOverlay').classList.add('show');
+  document.body.style.overflow = 'hidden';
+}
+function closeShare() {
+  document.getElementById('shareOverlay').classList.remove('show');
+  document.body.style.overflow = '';
+  document.getElementById('shareCopied').classList.remove('show');
+}
+
+async function doShare(type) {
+  const url = window.location.href || 'https://asiasie.com/horaire';
+  const title = 'Festival Asiasie 2026 — Horaire';
+  const text = 'Consulte la programmation officielle du Festival Asiasie 2026 !';
+
+  if (type === 'native') {
+    if (navigator.share) {
+      try { await navigator.share({ title, text, url }); closeShare(); } catch(e) {}
+    } else {
+      // Fallback: copy
+      doShare('copy');
+    }
+  } else if (type === 'copy') {
+    try {
+      await navigator.clipboard.writeText(url);
+      document.getElementById('shareCopied').classList.add('show');
+      setTimeout(() => { document.getElementById('shareCopied').classList.remove('show'); }, 2500);
+    } catch(e) {
+      // Last resort
+      const ta = document.createElement('textarea');
+      ta.value = url; document.body.appendChild(ta); ta.select();
+      document.execCommand('copy'); document.body.removeChild(ta);
+      document.getElementById('shareCopied').classList.add('show');
+      setTimeout(() => { document.getElementById('shareCopied').classList.remove('show'); }, 2500);
+    }
+  } else if (type === 'install') {
+    closeShare();
+    if (deferredPrompt) { triggerInstall(); }
+    else { showIosGuide(); }
+  }
+}
+
+// ── NAV FAV BADGE ──
+function updateNavFavBadge() {
+  const count = favCount();
+  const badge = document.getElementById('navFavBadge');
+  if (!badge) return;
+  if (count > 0) { badge.textContent = count; badge.classList.add('show'); }
+  else { badge.classList.remove('show'); }
+}
+
+// Patch updateFavsBtn to also update nav badge
+const _origUpdateFavsBtn = updateFavsBtn;
+function updateFavsBtn() {
+  _origUpdateFavsBtn();
+  updateNavFavBadge();
+}
+
+// Close share on ESC
+document.addEventListener('keydown', e => { if(e.key==='Escape') closeShare(); });
+// Init nav badge
+updateNavFavBadge();
 </script>
 </body>
 </html>
