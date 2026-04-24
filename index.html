@@ -866,13 +866,6 @@ function updateNavFavBadge() {
   else { badge.classList.remove('show'); }
 }
 
-// Patch updateFavsBtn to also update nav badge
-const _origUpdateFavsBtn = updateFavsBtn;
-function updateFavsBtn() {
-  _origUpdateFavsBtn();
-  updateNavFavBadge();
-}
-
 // Close share on ESC
 document.addEventListener('keydown', e => { if(e.key==='Escape') closeShare(); });
 // Init nav badge
