@@ -59,33 +59,7 @@
     display: none; /* caché sur mobile */
   }
 
-  /* Favs: icône ronde sur mobile, label complet sur desktop */
-  .favs-toggle {
-    display: flex; align-items: center; justify-content: center; gap: 5px;
-    background: transparent; border: 1.5px solid var(--text);
-    border-radius: 50%;
-    width: 40px; height: 40px;
-    cursor: pointer; -webkit-tap-highlight-color: transparent;
-    transition: all 0.15s; flex-shrink: 0;
-  }
-  .favs-toggle.active { background: var(--heart); border-color: var(--heart); color: #fff; }
-  .favs-toggle svg { width: 16px; height: 16px; flex-shrink: 0; }
-  .favs-toggle svg path { stroke: var(--muted); transition: stroke 0.15s; }
-  .favs-toggle.active svg path { stroke: #fff; fill: #fff; }
-  .favs-label-full { display: none; } /* caché sur mobile */
-  .favs-label-short { display: none; } /* on garde juste l'icône */
-
-  /* Badge count sur le bouton favs */
-  .favs-count-badge {
-    position: absolute; top: -4px; right: -4px;
-    background: var(--heart); color: #fff;
-    font-size: 9px; font-weight: 900;
-    width: 16px; height: 16px; border-radius: 50%;
-    display: none; align-items: center; justify-content: center;
-    border: 1.5px solid var(--cream);
-  }
-  .favs-count-badge.visible { display: flex; }
-  .favs-toggle-wrap { position: relative; display: flex; flex-shrink: 0; }
+  /* favs-toggle moved to bottom nav */
 
   /* Live pill: juste le point sur mobile */
   .live-pill {
@@ -103,12 +77,7 @@
     header { padding: 16px 20px; }
     .logo-svg { height: 34px; }
     .clock { display: block; }
-    .favs-toggle {
-      width: auto; height: auto; border-radius: 20px;
-      padding: 7px 14px; gap: 6px;
-    }
-    .favs-toggle svg { width: 13px; height: 13px; }
-    .favs-label-full { display: inline; font-size: 11px; font-weight: 800; letter-spacing: 0.06em; text-transform: uppercase; }
+
     .live-pill { width: auto; height: auto; border-radius: 20px; padding: 7px 13px; gap: 6px; background: #16a34a; }
     .live-pill-text { display: inline; font-size: 11px; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; }
     .live-dot { width: 6px; height: 6px; }
@@ -420,13 +389,6 @@
   </svg>
   <div class="header-right">
     <div class="clock" id="clock">--:--</div>
-    <div class="favs-toggle-wrap">
-      <button class="favs-toggle" id="favsToggle" onclick="toggleFavsMode()" aria-label="Mes coups de cœur">
-        <svg viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg>
-        <span class="favs-label-full" id="favsLabel">Mes coups de cœur</span>
-      </button>
-      <div class="favs-count-badge" id="favsBadge"></div>
-    </div>
     <div class="live-pill"><div class="live-dot"></div><span class="live-pill-text">Live</span></div>
   </div>
 </header>
@@ -562,31 +524,14 @@ function favCount() { return Object.keys(getFavs()).length; }
 let favsMode = false;
 function toggleFavsMode() {
   favsMode = !favsMode;
-  const btn = document.getElementById('favsToggle');
-  const lbl = document.getElementById('favsLabel');
-  if (favsMode) {
-    btn.classList.add('active');
-    if (lbl) lbl.textContent = 'Tous';
-  } else {
-    btn.classList.remove('active');
-    const count = favCount();
-    if (lbl) lbl.textContent = count > 0 ? `Coups de cœur (${count})` : 'Mes coups de cœur';
-  }
+  // Sync bottom nav
+  document.getElementById('navFavoris').classList.toggle('nav-on', favsMode);
+  document.getElementById('navHoraire').classList.toggle('nav-on', !favsMode);
   updateFavsBtn();
-  renderTimeline();
+  render();
 }
 
-// ── PWA ──
-let deferredPrompt = null;
-const isIOS = /iphone|ipad|ipod/i.test(navigator.userAgent) && !window.MSStream;
-const isStandalone = window.matchMedia('(display-mode: standalone)').matches || navigator.standalone;
-if (!isStandalone && !sessionStorage.getItem('install-dismissed')) {
-  if (isIOS) {
-    setTimeout(() => { document.getElementById('install-bar').classList.add('visible'); document.getElementById('install-btn').textContent='Comment ?'; document.getElementById('install-btn').onclick=showIosGuide; }, 2500);
-  } else {
-    window.addEventListener('beforeinstallprompt', e => { e.preventDefault(); deferredPrompt=e; setTimeout(()=>document.getElementById('install-bar').classList.add('visible'),1500); });
-  }
-}
+
 function triggerInstall(){ if(!deferredPrompt)return; deferredPrompt.prompt(); deferredPrompt.userChoice.then(()=>{ deferredPrompt=null; document.getElementById('install-bar').classList.remove('visible'); }); }
 function dismissInstall(){ sessionStorage.setItem('install-dismissed','1'); document.getElementById('install-bar').classList.remove('visible'); }
 function showIosGuide(){ document.getElementById('ios-overlay').classList.add('open'); document.getElementById('ios-guide').classList.add('open'); document.body.style.overflow='hidden'; }
@@ -706,14 +651,7 @@ function handleHeart(e, id) {
 }
 
 function updateFavsBtn() {
-  const count = favCount();
-  const lbl = document.getElementById("favsLabel");
-  const badge = document.getElementById("favsBadge");
-  if (lbl && !favsMode) lbl.textContent = count > 0 ? `Mes coups de cœur (${count})` : "Mes coups de cœur";
-  if (badge) {
-    if (count > 0) { badge.textContent = count; badge.classList.add("visible"); }
-    else { badge.classList.remove("visible"); }
-  }
+  updateNavFavBadge();
 }
 
 function renderTimeline(){
@@ -856,15 +794,13 @@ function navTo(section) {
   document.getElementById('cartePanel').classList.toggle('show', section === 'carte');
   // Favoris: toggle favs mode and switch to horaire view
   if (section === 'favoris') {
-    if (!favsMode) { favsMode = true; document.getElementById('navHoraire').classList.add('nav-on'); document.getElementById('navFavoris').classList.add('nav-on'); }
-    const lbl = document.getElementById('favsLabel');
-    if (lbl) lbl.textContent = 'Tous les événements';
-    document.getElementById('favsToggle').classList.add('active');
+    if (!favsMode) { favsMode = true; }
+    document.getElementById('navFavoris').classList.add('nav-on');
     render();
     currentNav = 'horaire';
   } else if (section === 'horaire') {
     // Turn off favs mode when tapping Horaire
-    if (favsMode) { favsMode = false; document.getElementById('favsToggle').classList.remove('active'); const lbl = document.getElementById('favsLabel'); if(lbl) { const count=favCount(); lbl.textContent=count>0?`Coups de cœur (${count})`:'Mes coups de cœur'; } render(); }
+    if (favsMode) { favsMode = false; document.getElementById('navFavoris').classList.remove('nav-on'); render(); }
   }
   // Partager handled by openShare
 }
