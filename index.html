@@ -776,38 +776,43 @@ setInterval(()=>{renderCountdown();renderClock();},1000);
 setInterval(()=>{renderNowBanner();renderTimeline();},60000);
 
 // ── BOTTOM NAV ──
-const NAV_IDS = ['navHoraire','navCarte','navFavoris','navPartager'];
 let currentNav = 'horaire';
 
 function navTo(section) {
   currentNav = section;
-  // Update nav button states
-  NAV_IDS.forEach(id => {
+
+  // ── Nav button active states ──
+  ['navHoraire','navCarte','navFavoris','navPartager'].forEach(id => {
     const btn = document.getElementById(id);
     if (!btn) return;
-    const match = id.replace('nav','').toLowerCase() === section;
-    btn.classList.toggle('nav-on', match);
+    const key = id.replace('nav','').toLowerCase();
+    // Horaire tab stays lit when favs mode is on
+    const active = key === section || (key === 'favoris' && section === 'favoris') || (key === 'horaire' && section === 'horaire');
+    btn.classList.toggle('nav-on', key === section);
     const dot = btn.querySelector('.nav-active-dot');
-    if (dot) dot.style.display = match ? 'block' : 'none';
+    if (dot) dot.style.display = key === section ? 'block' : 'none';
   });
-  // Show/hide panels
+
+  // ── Carte panel ──
   document.getElementById('cartePanel').classList.toggle('show', section === 'carte');
-  // Favoris: toggle favs mode and switch to horaire view
+
+  // ── Favoris ──
   if (section === 'favoris') {
-    if (!favsMode) { favsMode = true; }
-    document.getElementById('navFavoris').classList.add('nav-on');
+    favsMode = true;
     render();
-    currentNav = 'horaire';
-  } else if (section === 'horaire') {
-    // Turn off favs mode when tapping Horaire
-    if (favsMode) { favsMode = false; document.getElementById('navFavoris').classList.remove('nav-on'); render(); }
   }
-  // Partager handled by openShare
+  // ── Horaire ──
+  else if (section === 'horaire') {
+    favsMode = false;
+    render();
+  }
+  // ── Carte & Partager ── no favsMode change needed
 }
 
-// Hide active dot on all by default except current
+// Init: active dot on Horaire only
 document.querySelectorAll('.nav-active-dot').forEach(d => d.style.display = 'none');
-document.querySelector('#navHoraire .nav-active-dot').style.display = 'block';
+const _initDot = document.querySelector('#navHoraire .nav-active-dot');
+if (_initDot) _initDot.style.display = 'block';
 
 // ── SHARE ──
 function openShare() {
