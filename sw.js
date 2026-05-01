@@ -1,12 +1,9 @@
-const CACHE = 'asiasie-2026-v1';
-const ASSETS = [
-  './asiasie_horaire_2026.html',
-  './manifest.json'
-];
+const CACHE = 'asiasie-2026-v2';
+const ASSETS = ['/', '/index.html', '/manifest.json'];
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(CACHE).then(c => c.addAll(ASSETS))
+    caches.open(CACHE).then(c => c.addAll(ASSETS)).catch(() => {})
   );
   self.skipWaiting();
 });
@@ -22,6 +19,6 @@ self.addEventListener('activate', e => {
 
 self.addEventListener('fetch', e => {
   e.respondWith(
-    caches.match(e.request).then(cached => cached || fetch(e.request).catch(() => caches.match('./asiasie_horaire_2026.html')))
+    fetch(e.request).catch(() => caches.match(e.request))
   );
 });

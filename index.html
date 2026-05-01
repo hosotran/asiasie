@@ -9,7 +9,7 @@
 <meta name="apple-mobile-web-app-status-bar-style" content="default">
 <meta name="apple-mobile-web-app-title" content="Asiasie">
 <meta name="description" content="Horaire officiel du Festival Asiasie 2026 — Montréal">
-<link rel="manifest" href="manifest.json">
+<link rel="manifest" href="/manifest.json">
 <link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <title>Horaire — Festival Asiasie 2026</title>
 <style>
@@ -527,7 +527,7 @@ function triggerInstall(){
 function dismissInstall(){ sessionStorage.setItem('install-dismissed','1'); document.getElementById('install-bar').classList.remove('visible'); }
 function showIosGuide(){ document.getElementById('ios-overlay').classList.add('open'); document.getElementById('ios-guide').classList.add('open'); document.body.style.overflow='hidden'; }
 function closeIosGuide(){ document.getElementById('ios-overlay').classList.remove('open'); document.getElementById('ios-guide').classList.remove('open'); document.body.style.overflow=''; dismissInstall(); }
-if('serviceWorker' in navigator) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+if('serviceWorker' in navigator) navigator.serviceWorker.register('/sw.js').catch(()=>{});
 
 // ── DATA ──
 const FESTIVAL_START = new Date("2026-05-07T13:00:00");

@@ -1,25 +1,26 @@
 {
-  "name": "Festival Asiasie 2026",
-  "short_name": "Asiasie",
+  "name": "Horaire — Festival Asiasie 2026",
+  "short_name": "Asiasie 2026",
   "description": "Horaire officiel du Festival Asiasie 2026 — Montréal",
-  "start_url": "./asiasie_horaire_2026.html",
+  "start_url": "/",
+  "scope": "/",
   "display": "standalone",
-  "background_color": "#f0ebe0",
-  "theme_color": "#e8521a",
+  "background_color": "#f06118",
+  "theme_color": "#f06118",
   "orientation": "portrait",
   "lang": "fr",
   "icons": [
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'><rect width='192' height='192' fill='%23e8521a'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='72' fill='white'>A</text></svg>",
+      "src": "/icon-192.png",
       "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "any"
     },
     {
-      "src": "data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'><rect width='512' height='512' fill='%23e8521a'/><text x='50%25' y='54%25' dominant-baseline='middle' text-anchor='middle' font-family='Arial Black,sans-serif' font-weight='900' font-size='200' fill='white'>A</text></svg>",
+      "src": "/icon-512.png",
       "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any maskable"
+      "type": "image/png",
+      "purpose": "maskable"
     }
   ]
 }
