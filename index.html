@@ -753,10 +753,16 @@ function renderTimeline(){
 }
 
 function buildEventCard(ev, idx, st, lieu, date) {
+  // Sous-titre : note si dispo, sinon les 80 premiers caractères de la description
+  const subtitle = ev.note
+    ? ev.note
+    : ev.desc
+      ? ev.desc.substring(0, 80).trim() + (ev.desc.length > 80 ? '…' : '')
+      : '';
   return `<div class="event ${st==="live"?"is-live":""} ${st==="past"?"is-past":""}" data-start="${ev.start}" data-end="${ev.end}" onclick="openDrawer('${date}','${ev.id}')">
     <div class="stripe s-${ev.lieu}"></div>
     <div class="event-time">${ev.start}<br><span style="font-weight:500;opacity:0.5;font-size:12px;">${ev.end}</span></div>
-    <div class="event-body"><div class="event-name">${ev.name}</div>${ev.note?`<div class="event-sub">${ev.note}</div>`:""}</div>
+    <div class="event-body"><div class="event-name">${ev.name}</div>${subtitle?`<div class="event-sub">${subtitle}</div>`:""}</div>
     <div class="event-right">
       ${heartBtn(ev.id, true)}
       <span class="lieu-badge b-${ev.lieu}">${lieu?lieu.label:ev.lieu}</span>
