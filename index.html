@@ -17,17 +17,17 @@
 <title>Horaire — Festival Asiasie 2026</title>
 
 <!-- ══ GOOGLE ANALYTICS ══════════════════════════════════
-     REMPLACER "G-XXXXXXXXXX" par votre vrai ID de mesure
+     REMPLACER "G-6M39V072L5" par votre vrai ID de mesure
      Exemple : G-AB12CD34EF
      Vous trouverez votre ID dans :
      Google Analytics → Admin → Flux de données → votre site → ID de mesure
 ════════════════════════════════════════════════════════ -->
-<script async src="https://www.googletagmanager.com/gtag/js?id=G-XXXXXXXXXX"></script>
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-6M39V072L5"></script>
 <script>
   window.dataLayer = window.dataLayer || [];
   function gtag(){dataLayer.push(arguments);}
   gtag('js', new Date());
-  gtag('config', 'G-XXXXXXXXXX');
+  gtag('config', 'G-6M39V072L5');
 </script>
 <meta property="og:title" content="Horaire — Festival Asiasie 2026">
 <meta property="og:description" content="7–10 mai 2026 · Time Out Market & Centre Eaton · Montréal">
@@ -306,7 +306,8 @@
   }
 
   /* ── EVENT IMAGE ── */
-  .event-img { width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px 10px 0 0; display:block; }
+  /* Images reçues en 1080x1350 (4:5) — affichées en 16:9 rognées centré */
+  .event-img { width:100%; aspect-ratio:16/9; object-fit:cover; object-position:center 30%; display:block; }
   .event-img-wrap { margin:-18px -14px 14px -18px; overflow:hidden; border-radius:10px 10px 0 0; }
   @media(min-width:600px){ .event-img-wrap{ margin:-18px -14px 14px -20px; } }
 
