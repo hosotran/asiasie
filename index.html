@@ -305,6 +305,11 @@
     .page-title h1 { font-size: 24px; }
   }
 
+  /* ── EVENT IMAGE ── */
+  .event-img { width:100%; aspect-ratio:4/5; object-fit:cover; border-radius:10px 10px 0 0; display:block; }
+  .event-img-wrap { margin:-18px -14px 14px -18px; overflow:hidden; border-radius:10px 10px 0 0; }
+  @media(min-width:600px){ .event-img-wrap{ margin:-18px -14px 14px -20px; } }
+
   /* ── BOTTOM NAV ── */
   .bottom-nav {
     position: fixed; bottom: 0; left: 0; right: 0;
@@ -822,7 +827,10 @@ function openDrawer(date, evId){
   const lieuData=LIEUX.find(l=>l.key===ev.lieu);
   const faved = isFav(ev.id);
 
+  const evImg = {"j01": "cbc-photobooth", "j02": "dj-shota", "j03": "ceremonie-ouverture", "j04": "performances-ouverture", "j05": "atelier-sake", "v01": "atelier-matcha", "v02": "dj-mando-vaselina", "v03": "open-mic", "v04": "atelier-sake", "v05": "dj-mando-vaselina", "s01": "festival-acces-asie", "s02": "table-ronde", "s03": "atelier-the", "s04": "balterz-rpd", "s05": "arashi-daiko", "s06": "avq", "s07": "tenues-traditionnelles", "s08": "dj-shota", "s09": "atelier-sake", "s10": "atelier-sake", "s11": "cbc-photobooth", "d01": "danse-lion", "d02": "danse-lion", "d03": "table-ronde", "d04": "atelier-matcha", "d05": "veils-of-bollywood", "d06": "atelier-nerikiri", "d07": "veils-of-bollywood"};
+  const imgFile = evImg[ev.id] || null;
   document.getElementById("drawerHeader").innerHTML=`
+    ${imgFile ? `<div class="event-img-wrap"><img class="event-img" src="/images/${imgFile}.jpg" alt="${ev.name}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
     <div class="drawer-header-top">
       <div class="drawer-header-left">
         <span class="drawer-lieu-badge ${bc}">${lieuData?lieuData.full:ev.lieu}</span>
