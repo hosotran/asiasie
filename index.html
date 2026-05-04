@@ -382,6 +382,8 @@
   .lieu-badge { font-size: 11px; font-weight: 800; letter-spacing: 0.03em; padding: 5px 11px; border-radius: 10px; border: 1.5px solid; white-space: nowrap; }
   .b-scene { background: rgba(240,97,24,0.1); color: var(--orange); border-color: var(--orange); }
   .b-atelier { background: rgba(140,110,42,0.1); color: var(--brown); border-color: var(--brown); }
+  .b-barvin { background: rgba(120,40,70,0.1); color: #782846; border-color: #782846; }
+  .s-barvin { background: #782846; }
   .b-eaton { background: rgba(159,179,212,0.25); color: #4a6090; border-color: #7898c8; }
   .live-badge { font-size: 10px; font-weight: 900; letter-spacing: 0.08em; text-transform: uppercase; background: #fff; color: var(--orange); padding: 3px 8px; border-radius: 6px; }
   .event-arrow { font-size: 18px; color: var(--muted); line-height: 1; }
@@ -717,7 +719,7 @@ if('serviceWorker' in navigator){ setTimeout(()=>{ navigator.serviceWorker.regis
 const FESTIVAL_START = new Date("2026-05-07T17:00:00");
 const FESTIVAL_END   = new Date("2026-05-10T16:00:00");
 const DAYS=[{label:"Jeu 7",date:"2026-05-07"},{label:"Ven 8",date:"2026-05-08"},{label:"Sam 9",date:"2026-05-09"},{label:"Dim 10",date:"2026-05-10"}];
-const LIEUX=[{key:"scene",label:"🎤 Bar/Bière",full:"Espace Bar/Bière — Time Out Market",addr:"Time Out Market, 705 Ste-Catherine O."},{key:"atelier",label:"🎨 Espace Atelier",full:"Espace Atelier — Time Out Market",addr:"Time Out Market, 705 Ste-Catherine O."},{key:"eaton",label:"🏢 Centre Eaton",full:"RDC — Centre Eaton",addr:"Centre Eaton, 705 Ste-Catherine O."}];
+const LIEUX=[{key:"scene",label:"🎤 Bar/Bière",full:"Espace Bar/Bière — Time Out Market",addr:"Time Out Market, 705 Ste-Catherine O."},{key:"atelier",label:"🎨 Espace Atelier",full:"Espace Atelier — Time Out Market",addr:"Time Out Market, 705 Ste-Catherine O."},{key:"barvin",label:"🍷 Bar à vin",full:"Bar à vin — Time Out Market",addr:"Time Out Market, 705 Ste-Catherine O."},{key:"eaton",label:"🏢 Centre Eaton",full:"RDC — Centre Eaton",addr:"Cour centrale devant la boutique Dynamite — Centre Eaton, 705 Ste-Catherine O."}];
 const EVENTS={
   "2026-05-07":[
     {id:"j01",start:"17:00",end:"21:00",lieu:"scene",name:"CBC Photobooth",note:"Ouvert toute la soirée",
@@ -727,10 +729,10 @@ const EVENTS={
      desc:"DJ SHOTA prend les platines pour une soirée d'ouverture mémorable ! Spécialisé dans les sonorités asiatiques contemporaines, il mêle J-pop, city pop japonaise, électro et hits internationaux pour créer une ambiance festive et dansante tout au long de la soirée.",
      tags:["Gratuit","Musique","Danse","DJ"]},
     {id:"j03",start:"18:00",end:"18:30",lieu:"scene",name:"Cérémonie d'ouverture",
-     desc:"Rejoignez-nous pour la cérémonie d'ouverture officielle du Festival Asiasie, où nous donnerons le coup d'envoi de cette célébration du Mois du Patrimoine Asiatique en grand ! Prise de parole de nos organisateurs, d'un représentant du Time Out Market ainsi que de personnalités politiques de la ville.",
+     desc:"Rejoignez-nous pour la cérémonie d'ouverture officielle du Festival Asiasie, où nous donnerons le coup d'envoi de cette célébration du Mois du Patrimoine Asiatique en grand ! Prise de parole de nos organisateurs, d'un représentant du Time Out Market ainsi que de personnalités politiques de la ville. En vedette : performance de Golden Maiden.",
      tags:["Gratuit","Tout public","Cérémonie"]},
-    {id:"j04",start:"18:30",end:"19:00",lieu:"scene",name:"Performances d'ouverture",note:"Golden Maiden · Cithare Vietnamienne",
-     desc:"Des artistes de la scène asiatique montréalaise ouvrent le bal avec des performances inspirées des traditions musicales d'Asie. Au programme : Golden Maiden et une magnifique performance de Cithare Vietnamienne (đàn tranh) accompagnée de flûte (sáo trúc).",
+    {id:"j04",start:"18:30",end:"19:00",lieu:"scene",name:"Performances d'ouverture",note:"Cithare Vietnamienne (đàn tranh) · Flûte (sáo trúc)",
+     desc:"Une magnifique performance de Cithare Vietnamienne (đàn tranh) accompagnée de flûte (sáo trúc) — des instruments traditionnels vietnamiens qui transportent le public dans un voyage musical d'une rare beauté.",
      tags:["Gratuit","Tout public","Arts de la scène","Musique"]},
     {id:"j05",start:"19:00",end:"20:00",lieu:"atelier",name:"Atelier de saké",note:"Kuniko Fujita — Madame Saké au Québec · 11-12 places",
      desc:"Plongez dans l'univers du saké japonais avec Kuniko Fujita (Madame Saké au Québec), spécialiste du saké au Québec. Que vous soyez néophyte ou amateur éclairé, laissez-vous guider à travers la richesse de ce patrimoine japonais au Timeout Market Montréal. Atelier 1 — Le riz, l'âme du saké : apprenez-en plus sur les variétés de riz et leur rôle essentiel dans l'élaboration du saké. Cet atelier explore la diversité des grains et comment leur sélection s'accorde avec la vision du brasseur. Places limitées — Réservation obligatoire. 37$ + taxes. Contact : info@madamesakeauquebec.com — Objet : Atelier Madame Sake Timeout + type d'atelier souhaité + nombre de places.",
@@ -760,7 +762,7 @@ const EVENTS={
     {id:"s02",start:"13:00",end:"14:30",lieu:"scene",name:"Table ronde — La double vie des jeunes immigrants",
      desc:"Deux mondes. Une identité. Mille nuances. Le Troisième Espace, c'est une table ronde sur la double vie, le code-switching et l'identité plurielle des jeunes Québécois d'origine asiatique. Animé par Sudha Krishnan, journaliste CBC Montréal. Panélistes : Charles Nguyen (leader marketing, cofondateur NetGovern & président AVQ), Chu Anh Pham (ex-journaliste Radio-Canada/La Presse, porte-parole SQDC), Ravy Por (leader en IA chez Deloitte, fondatrice de Héros de chez nous & auteure de Coder son destin), Julie Quynh Nhi Tran (doctorante, intervenante psychosociale & chercheuse sur la mémoire diasporique vietnamienne).",
      tags:["Gratuit","Tout public","Discussion","Diaspora"]},
-    {id:"s03",start:"13:00",end:"14:30",lieu:"atelier",name:"Atelier de thé — Dégustation de 20 thés",note:"Han Le (Thés Guru) · Chine, Taiwan, Vietnam, Japon, Sri Lanka, Inde · Places limitées",
+    {id:"s03",start:"13:00",end:"14:30",lieu:"barvin",name:"Atelier de thé — Dégustation de 20 thés",note:"Han Le (Thés Guru) · Chine, Taiwan, Vietnam, Japon, Sri Lanka, Inde · Places limitées",
      desc:"Partez sur La Route du Thé avec nos maîtres du thé certifiés de niveau international — un voyage gustatif et olfactif à travers 20 thés grands crus en provenance de l'Inde, la Chine, Taïwan et du Japon. Circulez à votre rythme pendant 1h30 et sirotez des thés d'exception dans le cadre du Festival Asiasie. 12$ en prévente — 16$ sur place. Places limitées.",
      tags:["Places limitées","Dégustation","Thé","Asie"]},
     {id:"s04",start:"14:00",end:"15:00",lieu:"eaton",name:"Balterz & friends / RPD",note:"Balterz (15 min) + Random Play Dance (45 min)",
@@ -900,7 +902,7 @@ function renderTimeline(){
   if(lieuBanner){
     if(activeLieu !== 'all'){
       const l = getLieux().find(x=>x.key===activeLieu);
-      const colors = {scene:'var(--orange)',atelier:'var(--brown)',eaton:'var(--blue)'};
+      const colors = {scene:'var(--orange)',atelier:'var(--brown)',barvin:'#782846',eaton:'var(--blue)'};
       lieuBanner.innerHTML = l ? `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1.5px solid ${colors[activeLieu]||'#ccc'};background:rgba(0,0,0,0.04);margin-bottom:12px;"><span style="font-size:20px;">${l.label.split(' ')[0]}</span><div><div style="font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:${colors[activeLieu]};">${l.full}</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">📍 ${l.addr}</div></div><button onclick="setLieu('all')" style="margin-left:auto;background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:0;-webkit-tap-highlight-color:transparent;">×</button></div>` : '';
     } else {
       lieuBanner.innerHTML = '';
@@ -1095,8 +1097,8 @@ const EVENTS_EN = {
   "2026-05-07":[
     {id:"j01",name:"CBC Photobooth",note:"Open all evening",desc:"CBC/Radio-Canada is Canada's national public broadcaster, offering content in French, English and eight Indigenous languages. Always connected to communities, CBC is proud to be a media partner of this event and will be present on Thursday May 7 from 5 to 9 PM — stop by the photobooth!",tags:["Free","All ages","Photo"]},
     {id:"j02",name:"DJ SHOTA",desc:"DJ SHOTA takes over the decks for an unforgettable opening night! Specializing in contemporary Asian sounds, he blends J-pop, Japanese city pop, electronic music and international hits for a festive, danceable vibe all evening long.",tags:["Free","Music","Dance","DJ"]},
-    {id:"j03",name:"Opening Ceremony",desc:"Join us for the official opening ceremony of Festival Asiasie, where we kick off this celebration of Asian Heritage Month in style! Remarks from our organizers, a representative from Time Out Market, and political figures from the city.",tags:["Free","All ages","Ceremony"]},
-    {id:"j04",name:"Opening Performances",note:"Golden Maiden · Vietnamese Zither",desc:"Montreal Asian performing artists open the evening with performances inspired by Asian musical traditions. Featuring Golden Maiden and a beautiful Vietnamese Zither (đàn tranh) performance with flute (sáo trúc).",tags:["Free","All ages","Performing Arts","Music"]},
+    {id:"j03",name:"Opening Ceremony",desc:"Join us for the official opening ceremony of Festival Asiasie, where we kick off this celebration of Asian Heritage Month in style! Remarks from our organizers, a representative from Time Out Market, and political figures from the city. Featuring a performance by Golden Maiden.",tags:["Free","All ages","Ceremony"]},
+    {id:"j04",name:"Opening Performances",note:"Vietnamese Zither (đàn tranh) · Flute (sáo trúc)",desc:"A beautiful Vietnamese Zither (đàn tranh) performance accompanied by flute (sáo trúc) — traditional Vietnamese instruments that transport the audience on a musical journey of rare beauty.",tags:["Free","All ages","Performing Arts","Music"]},
     {id:"j05",name:"Sake Workshop",note:"Kuniko Fujita — Madame Saké au Québec · 11-12 spots",desc:"Dive into the world of Japanese sake with Kuniko Fujita (Madame Saké au Québec). Workshop 2 — Exceptional Cuvées: the Special Selection. An exclusive immersion into rare sakes — surprising bottles chosen for their complex aromatic profile and rarity. Reservation required. $37 + taxes. Contact: info@madamesakeauquebec.com — Subject: Atelier Madame Sake Timeout + workshop type + number of spots.",tags:["Limited spots","18+","Tasting","Japan"]},
   ],
   "2026-05-08":[
@@ -1116,7 +1118,7 @@ const EVENTS_EN = {
     {id:"s07",name:"Asian Pop in the Spotlight",desc:"Montreal dance groups perform iconic K-pop, J-pop and C-pop choreographies. Contagious energy, polished costumes and a passion for Asian pop cultures. 📍 Central courtyard in front of the Dynamite boutique at Centre Eaton de Montréal.",tags:["Free","All ages","K-pop","J-pop","Dance"]},
     {id:"s08",name:"Traditional Asian Attire Gathering",desc:"Wear your colours — join the gathering! For Asian Heritage Month, Time Out Market transforms into a festive space celebrating the diversity of Asian traditional attire. Kimonos, hanboks, saris and more — every outfit tells a story. Come share yours!",tags:["Free","All ages","Fashion","Heritage","Showcase"]},
     {id:"s09",name:"DJ Night",note:"DJ set — festival vibes",desc:"The main stage transforms into a dance floor for Saturday night! A DJ with Asian influences keeps the festive energy going, blending K-pop, J-pop, Asian electronic music and world music until closing.",tags:["Free","Music","Dance","DJ"]},
-    {id:"s10",name:"Sake Workshop",note:"Kuniko Fujita — Madame Saké au Québec · 11-12 spots",desc:"Three evenings, three themes, one expert: experience a Japanese sake initiation like nowhere else in Montreal. 📅 Reservation required — limited spots! To reserve: info@madamesakeauquebec.com • Subject: Atelier Madame Sake Timeout • Specify workshop type (1, 2 or 3) and number of spots. Fee: $37 + taxes = $42.54.",tags:["Limited spots","18+","Tasting","Japan"]},
+    {id:"s10",name:"Sake Workshop",note:"Kuniko Fujita — Madame Saké au Québec · 11-12 spots",desc:"Dive into the world of Japanese sake with Kuniko Fujita (Madame Saké au Québec), specialist in sake in Quebec. Workshop 3 — Celebration Sakes: the art of festivity. Explore the symbolic world of festive sakes through a refined tasting. Elegant flavours to discover Japanese traditions and mark precious moments. Reservation required. $37 + taxes. Contact: info@madamesakeauquebec.com — Subject: Atelier Madame Sake Timeout + workshop type + number of spots.",tags:["Limited spots","18+","Tasting","Japan"]},
     {id:"s11",name:"CBC Photobooth",note:"Open afternoon",desc:"The official CBC/Radio-Canada photobooth is back for Saturday! Festive backdrops, free instant prints. Come capture your festival day. 📍 Central courtyard in front of the Dynamite boutique at Centre Eaton de Montréal.",tags:["Free","All ages","Photo"]},
   ],
   "2026-05-10":[
@@ -1139,7 +1141,8 @@ const DAYS_EN = [
 const LIEUX_EN = [
   {key:"scene",  label:"🎤 Bar/Beer",    full:"Bar/Beer Area — Time Out Market",  addr:"Time Out Market, 705 Ste-Catherine W."},
   {key:"atelier",label:"🎨 Workshop Space",full:"Workshop Space — Time Out Market", addr:"Time Out Market, 705 Ste-Catherine W."},
-  {key:"eaton",  label:"🏢 Centre Eaton",full:"Ground Floor — Centre Eaton",      addr:"Centre Eaton, 705 Ste-Catherine W."}
+  {key:"barvin", label:"🍷 Wine Bar",    full:"Wine Bar — Time Out Market",       addr:"Time Out Market, 705 Ste-Catherine W."},
+  {key:"eaton",  label:"🏢 Centre Eaton",full:"Ground Floor — Centre Eaton",      addr:"Central courtyard in front of Dynamite — Centre Eaton, 705 Ste-Catherine W."}
 ];
 
 function toggleLang() {
@@ -1241,7 +1244,7 @@ function navTo(section) {
   if(lieuBanner){
     if(activeLieu !== 'all'){
       const l = getLieux().find(x=>x.key===activeLieu);
-      const colors = {scene:'var(--orange)',atelier:'var(--brown)',eaton:'var(--blue)'};
+      const colors = {scene:'var(--orange)',atelier:'var(--brown)',barvin:'#782846',eaton:'var(--blue)'};
       lieuBanner.innerHTML = l ? `<div style="display:flex;align-items:center;gap:10px;padding:10px 14px;border-radius:10px;border:1.5px solid ${colors[activeLieu]||'#ccc'};background:rgba(0,0,0,0.04);margin-bottom:12px;"><span style="font-size:20px;">${l.label.split(' ')[0]}</span><div><div style="font-size:12px;font-weight:900;text-transform:uppercase;letter-spacing:.06em;color:${colors[activeLieu]};">${l.full}</div><div style="font-size:11px;color:var(--muted);margin-top:2px;">📍 ${l.addr}</div></div><button onclick="setLieu('all')" style="margin-left:auto;background:none;border:none;font-size:18px;cursor:pointer;color:var(--muted);padding:0;-webkit-tap-highlight-color:transparent;">×</button></div>` : '';
     } else {
       lieuBanner.innerHTML = '';
