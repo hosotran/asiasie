@@ -453,8 +453,8 @@ document.addEventListener('touchmove', function(e){
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M4 12v8a2 2 0 002 2h12a2 2 0 002-2v-8"/><polyline points="16 6 12 2 8 6"/><line x1="12" y1="2" x2="12" y2="15"/></svg>
         </div>
         <div>
-          <div class="share-opt-label">Partager via…</div>
-          <div class="share-opt-sub">SMS, WhatsApp, Mail, Messenger…</div>
+          <div class="share-opt-label" id="shareLabelNative">Partager via…</div>
+          <div class="share-opt-sub" id="shareSubNative">SMS, WhatsApp, Mail, Messenger…</div>
         </div>
       </button>
       <button class="share-opt" onclick="doShare('copy')">
@@ -462,8 +462,8 @@ document.addEventListener('touchmove', function(e){
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><rect x="9" y="9" width="13" height="13" rx="2"/><path d="M5 15H4a2 2 0 01-2-2V4a2 2 0 012-2h9a2 2 0 012 2v1"/></svg>
         </div>
         <div>
-          <div class="share-opt-label">Copier le lien</div>
-          <div class="share-opt-sub">asiasie.com/programmation</div>
+          <div class="share-opt-label" id="shareLabelCopy">Copier le lien</div>
+          <div class="share-opt-sub" id="shareSubCopy">asiasie.com/programmation</div>
         </div>
       </button>
       <button class="share-opt" onclick="doShare('install')">
@@ -471,8 +471,8 @@ document.addEventListener('touchmove', function(e){
           <svg viewBox="0 0 24 24" fill="none" stroke="#fff" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><path d="M21 15v4a2 2 0 01-2 2H5a2 2 0 01-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
         </div>
         <div>
-          <div class="share-opt-label">Ajouter à l'écran d'accueil</div>
-          <div class="share-opt-sub">Installer l'app — gratuit, zéro App Store</div>
+          <div class="share-opt-label" id="shareLabelInstall">Ajouter à l'écran d'accueil</div>
+          <div class="share-opt-sub" id="shareSubInstall">Installer l'app — gratuit, zéro App Store</div>
         </div>
       </button>
     </div>
@@ -484,7 +484,7 @@ document.addEventListener('touchmove', function(e){
 <div id="ios-overlay" onclick="closeIosGuide()"></div>
 <div id="ios-guide">
   <div class="ios-handle"></div>
-  <div class="ios-guide-title">Ajouter à l'écran d'accueil</div>
+  <div class="ios-guide-title" id="iosGuideTitle">Ajouter à l'écran d'accueil</div>
   <div class="ios-step"><div class="ios-step-num">1</div><div class="ios-step-text">Appuie sur le bouton <strong>Partager</strong> en bas de Safari</div></div>
   <div class="ios-step"><div class="ios-step-num">2</div><div class="ios-step-text">Appuie sur <strong>« Sur l'écran d'accueil »</strong></div></div>
   <div class="ios-step"><div class="ios-step-num">3</div><div class="ios-step-text">Appuie sur <strong>« Ajouter »</strong> — c'est fait !</div></div>
@@ -683,14 +683,17 @@ function renderDayTabs(){
   ).join("");
 }
 function renderLegend(){
-  const evs=EVENTS[getDays()[activeDay].date]||[],pres=new Set(evs.map(e=>e.lieu));
-  const pc={scene:"var(--orange)",atelier:"var(--brown)",eaton:"var(--blue)"};
+  const date=getDays()[activeDay].date;
+  const evs=getEvents(date)||[];
+  const pres=new Set(evs.map(e=>e.lieu));
+  const lieux=getLieux();
+  const allLabel=lang==='en'?'All':'Tous';
   if(favsMode){document.getElementById("legend").innerHTML="";return;}
-  const total=(EVENTS[getDays()[activeDay].date]||[]).length;
-  let h=`<button class="legend-btn ${activeLieu==="all"?"a-all":""}" onclick="setLieu('all')">Tous (${total})</button>`;
-  LIEUX.forEach(l=>{
+  const total=evs.length;
+  let h=`<button class="legend-btn ${activeLieu==="all"?"a-all":""}" onclick="setLieu('all')">${allLabel} (${total})</button>`;
+  lieux.forEach(l=>{
     if(pres.has(l.key)){
-      const count=(EVENTS[getDays()[activeDay].date]||[]).filter(e=>e.lieu===l.key).length;
+      const count=evs.filter(e=>e.lieu===l.key).length;
       h+=`<button class="legend-btn ${activeLieu===l.key?"a-"+l.key:""}" onclick="setLieu('${l.key}')">${l.label} (${count})</button>`;
     }
   });
@@ -755,6 +758,8 @@ function renderTimeline(){
       lieuBanner.innerHTML = '';
     }
   }
+  // Also update legend immediately when lang changes
+  renderLegend();
   if (favsMode) {
     // show all favs across all days
     let favsHtml = "";
@@ -902,12 +907,18 @@ const T = {
     page_title: 'Festival Asiasie — Programmation officielle',
     page_sub: '7 – 10 mai 2026 · Time Out Market & Centre Eaton · Montréal',
     live_text: 'Live',
+    now_banner_text: 'Happening now',
+    today_label: 'Today',
+    filter_all: 'All',
+    countdown_title: 'The festival starts in',
+    page_header: 'FESTIVAL ASIASIE — OFFICIAL PROGRAM',
+    page_subheader: 'May 7–10, 2026 · Time Out Market & Centre Eaton · Montréal',
   },
   en: {
     countdown_label: 'Festival starts in',
     days: 'Days', hours: 'Hours', min: 'Min', sec: 'Sec',
     all: 'All', now_tag: 'Now on',
-    share_title: 'Share the schedule',
+    share_title: 'Share the program',
     share_native: 'Share via…', share_native_sub: 'SMS, WhatsApp, Email, Messenger…',
     share_copy: 'Copy link', share_copy_sub: 'asiasie.com/program',
     share_install: 'Add to home screen', share_install_sub: 'Install the app — free, no App Store needed',
@@ -922,6 +933,12 @@ const T = {
     page_title: 'Festival Asiasie — Official Program',
     page_sub: 'May 7–10, 2026 · Time Out Market & Centre Eaton · Montréal',
     live_text: 'Live',
+    now_banner_text: 'Happening now',
+    today_label: 'Today',
+    filter_all: 'All',
+    countdown_title: 'The festival starts in',
+    page_header: 'FESTIVAL ASIASIE — OFFICIAL PROGRAM',
+    page_subheader: 'May 7–10, 2026 · Time Out Market & Centre Eaton · Montréal',
   }
 };
 
@@ -982,8 +999,11 @@ function toggleLang() {
   lang = lang === 'fr' ? 'en' : 'fr';
   document.getElementById('langBtn').textContent = lang === 'fr' ? 'EN' : 'FR';
   // Update page title and sub
-  document.querySelector('.page-title h1').textContent = T[lang].page_title;
-  document.querySelector('.page-title .sub').textContent = T[lang].page_sub;
+  const h1 = document.querySelector('.page-title h1');
+  const sub = document.querySelector('.page-title .sub');
+  if(h1) h1.textContent = T[lang].page_title;
+  if(sub) sub.textContent = T[lang].page_sub;
+  // sub handled above
   // Update nav labels
   document.querySelector('#navHoraire .nav-label').textContent = T[lang].nav_horaire;
   document.querySelector('#navFavoris .nav-label').textContent = T[lang].nav_favoris;
@@ -997,8 +1017,29 @@ function toggleLang() {
   if(iStrong) iStrong.textContent = T[lang].install_title;
   if(iSpan) iSpan.textContent = T[lang].install_sub;
   if(iBtn) iBtn.textContent = T[lang].install_btn;
-  // Re-render everything
-  render();
+  // Update share panel
+  const shareTitle = document.getElementById('shareTitle');
+  if(shareTitle) shareTitle.textContent = t('share_title');
+  const sln = document.getElementById('shareLabelNative');
+  if(sln) sln.textContent = t('share_native');
+  const ssn = document.getElementById('shareSubNative');
+  if(ssn) ssn.textContent = t('share_native_sub');
+  const slc = document.getElementById('shareLabelCopy');
+  if(slc) slc.textContent = t('share_copy');
+  const ssc = document.getElementById('shareSubCopy');
+  if(ssc) ssc.textContent = t('share_copy_sub');
+  const sli = document.getElementById('shareLabelInstall');
+  if(sli) sli.textContent = t('share_install');
+  const ssi = document.getElementById('shareSubInstall');
+  if(ssi) ssi.textContent = t('share_install_sub');
+  const scb = document.getElementById('shareCloseBtn');
+  if(scb) scb.textContent = t('share_close');
+  // iOS guide
+  const iosT = document.getElementById('iosGuideTitle');
+  if(iosT) iosT.textContent = lang === 'en' ? 'Add to Home Screen' : "Ajouter à l'écran d'accueil";
+  // Re-render everything with new language
+  render(); // render() calls renderLegend, renderNowBanner, renderTimeline, renderDayTabs
+  renderCountdown();
 }
 
 function t(key) { return T[lang][key] || T.fr[key] || key; }
@@ -1059,6 +1100,8 @@ function navTo(section) {
       lieuBanner.innerHTML = '';
     }
   }
+  // Also update legend immediately when lang changes
+  renderLegend();
   if (favsMode) { favsMode = false; document.getElementById('navFavoris').classList.remove('nav-on'); render(); }
   }
   // Partager handled by openShare
