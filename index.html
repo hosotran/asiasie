@@ -2,6 +2,7 @@
 <html lang="fr">
 <head>
 <meta charset="UTF-8">
+<meta name="color-scheme" content="light">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
 <meta name="theme-color" content="#f06118">
 <meta name="mobile-web-app-capable" content="yes">
@@ -21,6 +22,7 @@
 <meta name="geo.position" content="45.5088;-73.5878">
 <meta name="ICBM" content="45.5088, -73.5878">
 <link rel="canonical" href="https://programmation.asiasie.com/">
+<link rel="preload" as="image" href="/images/dj-shota.jpg" fetchpriority="high">
 
 <!-- ══ OPEN GRAPH (Facebook, WhatsApp, LinkedIn) ══ -->
 <meta property="og:type" content="event">
@@ -159,7 +161,11 @@
 <link rel="icon" type="image/x-icon" href="/favicon.ico?v=2">
 <link rel="icon" type="image/png" href="data:image/png;base64,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">
 <link rel="apple-touch-icon" href="/icon-192.png?v=2">
-<link href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="preload" as="style" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700;900&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700;900&display=swap" media="print" onload="this.media='all'">
+<noscript><link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Figtree:wght@400;700;900&display=swap"></noscript>
 <title>Programmation — Festival Asiasie 2026</title>
 
 <!-- ══ GOOGLE ANALYTICS ══════════════════════════════════
@@ -194,6 +200,7 @@
     --d3-bg: #c8d8ed; --d3-text: #1e3d6b; --d3-bd: #8aacd4;
   }
   html { scroll-behavior: smooth; }
+  @font-face { font-display: swap; }
   body { background: var(--cream); color: var(--text); font-family: 'Figtree', -apple-system, BlinkMacSystemFont, sans-serif; min-height: 100vh; -webkit-text-size-adjust: 100%; overscroll-behavior: none; }
 
   /* TICKER */
@@ -450,7 +457,8 @@
 
   /* ── EVENT IMAGE ── */
   /* Images 1080x1350 (4:5) — affichées en 4:5 sans coupure */
-  .event-img { width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center top; display:block; }
+  .event-img { width:100%; aspect-ratio:4/5; object-fit:cover; object-position:center top; display:block; height:auto; }
+  .event-img-placeholder { width:100%; aspect-ratio:4/5; background:var(--beige); }
   .event-img-wrap { margin:-18px -14px 14px -18px; overflow:hidden; border-radius:10px 10px 0 0; }
   @media(min-width:600px){ .event-img-wrap{ margin:-18px -14px 14px -20px; } }
 
@@ -635,7 +643,7 @@ document.addEventListener('touchmove', function(e){
 </div>
 
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
-<div class="drawer" id="drawer" role="dialog" aria-modal="true">
+<div class="drawer" id="drawer" role="dialog" aria-modal="true" aria-label="Détails de l'événement">
   <div class="drawer-handle-wrap" onclick="closeDrawer()"><div class="drawer-handle"></div></div>
   <div class="drawer-header" id="drawerHeader"></div>
   <div class="drawer-body" id="drawerBody"></div>
@@ -750,7 +758,7 @@ const EVENTS={
      desc:"Le Festival Accès Asie monte sur scène pour présenter sa mission unique : rendre les arts et cultures d'Asie accessibles à tous les Montréalais. Découvrez leurs projets, coups de cœur et leur vision d'une ville plus inclusive et multiculturelle.",
      tags:["Gratuit","Tout public","Communauté"]},
     {id:"s02",start:"13:00",end:"14:30",lieu:"scene",name:"Table ronde — La double vie des jeunes immigrants",
-     desc:"Des jeunes de la diaspora asiatique partagent leur vécu : naviguer entre deux cultures, deux langues, deux identités. Entre fierté et tiraillement, humour et sincérité, cette table ronde aborde des réalités que beaucoup reconnaîtront. Discussion ouverte aux questions du public.",
+     desc:"Identité, code-switching, appartenance — une conversation sur ce que signifie vraiment « être d'ici » pour les jeunes Québécois d'origine asiatique. Des jeunes de la diaspora partagent leur vécu : naviguer entre deux cultures, deux langues, deux identités. Entre fierté et tiraillement, humour et sincérité, cette table ronde aborde des réalités que beaucoup reconnaîtront. Discussion ouverte aux questions du public.",
      tags:["Gratuit","Tout public","Discussion","Diaspora"]},
     {id:"s03",start:"13:00",end:"14:30",lieu:"atelier",name:"Atelier de thé — Dégustation de 20 thés",note:"Han Le (Thés Guru) · Chine, Taiwan, Vietnam, Japon, Sri Lanka, Inde · Places limitées",
      desc:"Un voyage sensoriel exceptionnel à travers 20 thés soigneusement sélectionnés par Han Le, fondateur de Thés Guru. Du sencha japonais au pu-erh yunnanais, en passant par l'oolong taïwanais et le darjeeling indien — chaque thé raconte une histoire de terroir et de savoir-faire ancestral. Places limitées — réservation requise !",
@@ -768,7 +776,7 @@ const EVENTS={
      desc:"Des groupes de danse montréalais reprennent les chorégraphies iconiques de la K-pop, J-pop et C-pop. Énergie contagieuse, costumes soignés et passion communicative pour les cultures pop d'Asie.",
      tags:["Gratuit","Tout public","K-pop","J-pop","Danse"]},
     {id:"s08",start:"16:00",end:"17:00",lieu:"scene",name:"Rassemblement de tenues traditionnelles d'Asie",
-     desc:"Un défilé festif et coloré de tenues traditionnelles portées fièrement par des membres de la communauté asiatique de Montréal. Kimonos japonais, hanbok coréens, áo dài vietnamiens, qipaos chinois, saris indiens... Un moment de partage et de fierté culturelle ouvert à tous.",
+     desc:"Un rassemblement haut en couleurs pour célébrer la richesse des tenues traditionnelles asiatiques, en famille ou entre amis. Kimonos japonais, hanbok coréens, áo dài vietnamiens, qipaos chinois, saris indiens... Un moment de partage et de fierté culturelle ouvert à tous.",
      tags:["Gratuit","Tout public","Mode","Patrimoine","Défilé"]},
     {id:"s09",start:"17:30",end:"21:30",lieu:"scene",name:"Soirée DJ",note:"DJ set — ambiance festival",
      desc:"La scène principale se transforme en piste de danse pour la soirée du samedi ! Un DJ aux influences asiatiques assure une ambiance festive continue, mêlant K-pop, J-pop, électro asiatique et musiques du monde pour faire danser tout le monde jusqu'à la fermeture.",
@@ -788,16 +796,16 @@ const EVENTS={
      desc:"La troupe partage l'histoire de la danse du lion, les disciplines du wushu et leur mission de transmission culturelle auprès de la jeunesse montréalaise. Démonstration de wushu et échanges avec le public.",
      tags:["Gratuit","Tout public","Wushu","Chine","Arts martiaux"]},
     {id:"d03",start:"13:00",end:"14:30",lieu:"scene",name:"Table ronde — Les effets du mouvement anti-immigration",
-     desc:"Une discussion essentielle sur les impacts du mouvement anti-immigration sur les immigrants et communautés racisées au Québec et au Canada. Des voix de la communauté asiatique partagent leurs expériences, leurs craintes et leurs espoirs. Un espace de dialogue respectueux ouvert à tous.",
+     desc:"Comment les discours anti-immigration affectent la santé mentale des jeunes de 2e et 3e génération — ceux dont la québécitude est sans cesse remise en question. Des voix de la communauté asiatique partagent leurs expériences, leurs craintes et leurs espoirs. Un espace de dialogue respectueux ouvert à tous.",
      tags:["Gratuit","Tout public","Discussion","Société"]},
     {id:"d04",start:"13:00",end:"14:00",lieu:"atelier",name:"Atelier de Matcha",note:"Par Madame Matcha — 10 places disponibles",
-     desc:"Dernière session de l'atelier de matcha pour clore le festival en douceur. Apprenez les gestes précis de la cérémonie japonaise du thé et dégustez un matcha préparé à la minute. Un moment de sérénité bienvenu. Places très limitées — 10 places seulement ! Réservation requise, contactez Madame Matcha pour réserver votre place.",
+     desc:"Apprenez tout sur le matcha et dégustez 4 variétés avec Madame Matcha, héritière d'une maison de thé japonaise. Apprenez les gestes précis de la cérémonie japonaise du thé et repartez avec un moment de sérénité inoubliable. Places très limitées — 10 places seulement ! Réservation requise, contactez Madame Matcha pour réserver votre place.",
      tags:["Places limitées","Dégustation","Japon","Thé"]},
     {id:"d05",start:"13:30",end:"14:15",lieu:"eaton",name:"Veils of Bollywood — Atelier de danse interactive",note:"Rameez Karim · Arrivée 13h30 pour setup · Atelier 14h-14h45",
      desc:"Aucune expérience requise ! Rameez Karim et la troupe Veils of Bollywood vous initient aux mouvements emblématiques de la danse bollywoodienne dans une ambiance festive, bienveillante et pleine d'énergie. Venez comme vous êtes — repartez en dansant !",
      tags:["Gratuit","Tout public","Bollywood","Inde","Participatif"]},
     {id:"d06",start:"15:00",end:"16:00",lieu:"atelier",name:"Atelier Nerikiri",note:"KOTOAN — Pâtisserie japonaise · Places à confirmer",
-     desc:"Le nerikiri est l'art japonais des confiseries sculptées — de véritables petites œuvres d'art en pâte de haricots blancs colorée. Guidé par l'équipe de KOTOAN, vous créerez vos propres wagashi aux formes inspirées de la nature et des saisons. Vous repartez avec vos créations ! Places limitées — nombre de places à confirmer, réservation requise.",
+     desc:"Initiez-vous à l'art du Nerikiri, une délicate sucrerie japonaise végane et sans gluten, lors d'un atelier exclusif. Guidé par l'équipe de KOTOAN, vous créerez vos propres wagashi aux formes inspirées de la nature et des saisons — de véritables petites œuvres d'art en pâte de haricots blancs colorée. Vous repartez avec vos créations ! Places limitées — nombre de places à confirmer, réservation requise.",
      tags:["Places limitées","Japon","Artisanat","Wagashi"]},
     {id:"d07",start:"15:30",end:"16:00",lieu:"scene",name:"Présentation organisme",note:"Veils of Bollywood",
      desc:"La troupe Veils of Bollywood partage sa mission de promotion et de transmission des arts de la danse indienne à Montréal. Une présentation inspirante sur la culture bollywoodienne et son impact dans la métropole.",
@@ -985,7 +993,7 @@ function openDrawer(date, evId){
   const evImg = {"j01": "cbc-photobooth", "j02": "dj-shota", "j03": "ceremonie-ouverture", "j04": "performances-ouverture", "j05": "atelier-sake", "v01": "atelier-matcha", "v02": "dj-mando-vaselina", "v03": "open-mic", "v04": "atelier-sake", "v05": "dj-mando-vaselina", "s01": "festival-acces-asie", "s02": "table-ronde", "s03": "atelier-the", "s04": "balterz-rpd", "s05": "arashi-daiko", "s06": "avq", "s07": "tenues-traditionnelles", "s08": "dj-shota", "s09": "atelier-sake", "s10": "atelier-sake", "s11": "cbc-photobooth", "d01": "danse-lion", "d02": "danse-lion", "d03": "table-ronde", "d04": "atelier-matcha", "d05": "veils-of-bollywood", "d06": "atelier-nerikiri", "d07": "veils-of-bollywood"};
   const imgFile = evImg[ev.id] || null;
   document.getElementById("drawerHeader").innerHTML=`
-    ${imgFile ? `<div class="event-img-wrap"><img class="event-img" src="/images/${imgFile}.jpg" alt="${ev.name}" loading="lazy" onerror="this.parentElement.style.display='none'"></div>` : ''}
+    ${imgFile ? `<div class="event-img-wrap"><img class="event-img" src="/images/${imgFile}.jpg" alt="${ev.name}" loading="lazy" width="1080" height="1350" onerror="this.parentElement.style.display='none'"></div>` : ''}
     <div class="drawer-header-top">
       <div class="drawer-header-left">
         <span class="drawer-lieu-badge ${bc}">${lieuData?lieuData.full:ev.lieu}</span>
@@ -1103,13 +1111,13 @@ const EVENTS_EN = {
   ],
   "2026-05-09":[
     {id:"s01",name:"Organization Showcase",note:"Festival Accès Asie",desc:"Festival Accès Asie takes the stage to present their unique mission: making Asian arts and cultures accessible to all Montrealers. Discover their projects, highlights and vision of a more inclusive, multicultural city.",tags:["Free","All ages","Community"]},
-    {id:"s02",name:"Panel — The Double Life of Young Immigrants",desc:"Young members of the Asian diaspora share their experiences: navigating two cultures, two languages, two identities. Between pride and tension, humour and sincerity, this panel addresses realities many will recognize. Open Q&A.",tags:["Free","All ages","Discussion","Diaspora"]},
+    {id:"s02",name:"Panel — The Double Life of Young Immigrants",desc:"Identity, code-switching, belonging — a conversation about what it truly means to ‘be from here’ for young Québecers of Asian origin. Young members of the Asian diaspora share their experiences: navigating two cultures, two languages, two identities. Between pride and tension, humour and sincerity, this panel addresses realities many will recognize. Open Q&A.",tags:["Free","All ages","Discussion","Diaspora"]},
     {id:"s03",name:"Tea Workshop — Tasting 20 Teas",note:"Han Le (Thés Guru) · China, Taiwan, Vietnam, Japan, Sri Lanka, India · Limited spots",desc:"An exceptional sensory journey through 20 carefully selected teas by Han Le, founder of Thés Guru. From Japanese sencha to Yunnan pu-erh, Taiwanese oolong and Indian darjeeling — each tea tells a story of terroir and ancestral expertise. Limited spots — reservation required!",tags:["Limited spots","Tasting","Tea","Asia"]},
     {id:"s04",name:"Balterz & friends / RPD",note:"Balterz (15 min) + Random Play Dance (45 min)",desc:"At Centre Eaton, Balterz opens with a 15-minute set followed by Random Play Dance for 45 minutes of pure energy. Hip-hop, spoken word and contemporary dance with Asian influences.",tags:["Free","All ages","Hip-hop","Dance","Spoken word"]},
     {id:"s05",name:"Arashi Daiko",note:"Japanese percussion — Taiko",desc:"Arashi Daiko takes over Centre Eaton with a taiko performance of breathtaking power and precision. An electrifying moment right in the heart of Centre Eaton!",tags:["Free","All ages","Japan","Percussion","Taiko"]},
     {id:"s06",name:"Organization Showcase",note:"AVQ",desc:"The Association des Vietnamiens du Québec (AVQ) presents its history, mission and projects for the Vietnamese community in Montreal. An open window into a dynamic community celebrating its heritage.",tags:["Free","All ages","Community","Vietnam"]},
     {id:"s07",name:"Asian Pop in the Spotlight",desc:"Montreal dance groups perform iconic K-pop, J-pop and C-pop choreographies. Contagious energy, polished costumes and a passion for Asian pop cultures.",tags:["Free","All ages","K-pop","J-pop","Dance"]},
-    {id:"s08",name:"Traditional Asian Attire Gathering",desc:"A festive, colourful showcase of traditional attire proudly worn by members of Montreal's Asian community. Japanese kimonos, Korean hanbok, Vietnamese áo dài, Chinese qipaos, Indian saris... Open to all.",tags:["Free","All ages","Fashion","Heritage","Showcase"]},
+    {id:"s08",name:"Traditional Asian Attire Gathering",desc:"A vibrant gathering to celebrate the richness of Asian traditional attire, with family and friends. Japanese kimonos, Korean hanbok, Vietnamese áo dài, Chinese qipaos, Indian saris... Open to all.",tags:["Free","All ages","Fashion","Heritage","Showcase"]},
     {id:"s09",name:"DJ Night",note:"DJ set — festival vibes",desc:"The main stage transforms into a dance floor for Saturday night! A DJ with Asian influences keeps the festive energy going, blending K-pop, J-pop, Asian electronic music and world music until closing.",tags:["Free","Music","Dance","DJ"]},
     {id:"s10",name:"Sake Workshop",note:"Kuniko Fujita — Madame Saké au Québec · 11-12 spots",desc:"Three evenings, three themes, one expert: experience a Japanese sake initiation like nowhere else in Montreal. 📅 Reservation required — limited spots! To reserve: info@madamesakeauquebec.com • Subject: Atelier Madame Sake Timeout • Specify workshop type (1, 2 or 3) and number of spots. Fee: $37 + taxes = $42.54.",tags:["Limited spots","18+","Tasting","Japan"]},
     {id:"s11",name:"CBC Photobooth",note:"Open afternoon",desc:"The official CBC/Radio-Canada photobooth is back for Saturday! Festive backdrops, free instant prints. Come capture your festival day.",tags:["Free","All ages","Photo"]},
@@ -1117,10 +1125,10 @@ const EVENTS_EN = {
   "2026-05-10":[
     {id:"d01",name:"Lion Dance",note:"Montreal Legacy Lion Dance & Wushu Team",desc:"The Lion Dance by Montreal Legacy opens the final day! A millennial tradition that wards off evil spirits and attracts good luck — a colourful, rhythmic and deeply symbolic performance.",tags:["Free","All ages","China","Tradition","Martial Arts"]},
     {id:"d02",name:"Montreal Legacy Lion Dance & Wushu Team Presentation",desc:"The troupe shares the history of the lion dance, wushu disciplines and their mission to pass on cultural heritage to Montreal's youth. Wushu demonstration and audience Q&A.",tags:["Free","All ages","Wushu","China","Martial Arts"]},
-    {id:"d03",name:"Panel — Effects of the Anti-Immigration Movement",desc:"An essential discussion on the impacts of the anti-immigration movement on immigrants and racialized communities in Quebec and Canada. Asian community voices share their experiences and hopes. Open to all.",tags:["Free","All ages","Discussion","Society"]},
-    {id:"d04",name:"Matcha Workshop",note:"By Madame Matcha — 10 spots available",desc:"Final matcha session to close the festival gently. Learn the precise gestures of the Japanese tea ceremony and taste a freshly prepared matcha. A welcome moment of serenity. Very limited spots — 10 spots only! Reservation required, contact Madame Matcha to book your spot.",tags:["Limited spots","Tasting","Japan","Tea"]},
+    {id:"d03",name:"Panel — Effects of the Anti-Immigration Movement",desc:"How anti-immigration discourse affects the mental health of 2nd and 3rd generation youth — those whose Québec identity is constantly called into question. Asian community voices share their experiences, fears and hopes. A respectful dialogue space open to all.",tags:["Free","All ages","Discussion","Society"]},
+    {id:"d04",name:"Matcha Workshop",note:"By Madame Matcha — 10 spots available",desc:"Learn everything about matcha and taste 4 varieties with Madame Matcha, heir to a Japanese tea house. Learn the precise gestures of the Japanese tea ceremony and leave with an unforgettable moment of serenity. Very limited spots — 10 spots only! Reservation required, contact Madame Matcha to book your spot.",tags:["Limited spots","Tasting","Japan","Tea"]},
     {id:"d05",name:"Veils of Bollywood — Interactive Dance Workshop",note:"Rameez Karim · Arrival 1:30 PM for setup · Workshop 2:00–2:45 PM",desc:"No experience required! Rameez Karim and Veils of Bollywood introduce you to iconic Bollywood dance moves in a festive, welcoming atmosphere. Come as you are — leave dancing!",tags:["Free","All ages","Bollywood","India","Participatory"]},
-    {id:"d06",name:"Nerikiri Workshop",note:"KOTOAN — Japanese Confectionery · Spots TBC",desc:"Nerikiri is the Japanese art of sculpted confectioneries — tiny works of art made from coloured white bean paste. Guided by the KOTOAN team, create your own wagashi inspired by nature and the seasons. You leave with your creations! Limited spots — number of spots TBC, reservation required.",tags:["Limited spots","Japan","Craft","Wagashi"]},
+    {id:"d06",name:"Nerikiri Workshop",note:"KOTOAN — Japanese Confectionery · Spots TBC",desc:"Discover the art of Nerikiri, a delicate Japanese confectionery that is vegan and gluten-free, in an exclusive workshop. Guided by the KOTOAN team, create your own wagashi inspired by nature and the seasons — tiny works of art made from coloured white bean paste. You leave with your creations! Limited spots — number of spots TBC, reservation required.",tags:["Limited spots","Japan","Craft","Wagashi"]},
     {id:"d07",name:"Organization Showcase",note:"Veils of Bollywood",desc:"Veils of Bollywood shares their mission of promoting and transmitting Indian dance arts in Montreal. An inspiring presentation on Bollywood culture and its impact in the city.",tags:["Free","All ages","India","Bollywood","Community"]},
   ],
 };
