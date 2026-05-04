@@ -638,10 +638,10 @@ document.addEventListener('touchmove', function(e){
 <div id="ios-guide">
   <div class="ios-handle"></div>
   <div class="ios-guide-title" id="iosGuideTitle">Ajouter à l'écran d'accueil</div>
-  <div class="ios-step"><div class="ios-step-num">1</div><div class="ios-step-text">Appuie sur le bouton <strong>Partager</strong> en bas de Safari</div></div>
-  <div class="ios-step"><div class="ios-step-num">2</div><div class="ios-step-text">Appuie sur <strong>« Sur l'écran d'accueil »</strong></div></div>
-  <div class="ios-step"><div class="ios-step-num">3</div><div class="ios-step-text">Appuie sur <strong>« Ajouter »</strong> — c'est fait !</div></div>
-  <button class="ios-close" onclick="closeIosGuide()">Compris !</button>
+  <div class="ios-step" id="iosStep1"><div class="ios-step-num">1</div><div class="ios-step-text">Appuie sur le bouton <strong>Partager</strong> en bas de Safari</div></div>
+  <div class="ios-step" id="iosStep2"><div class="ios-step-num">2</div><div class="ios-step-text">Appuie sur <strong>« Sur l'écran d'accueil »</strong></div></div>
+  <div class="ios-step" id="iosStep3"><div class="ios-step-num">3</div><div class="ios-step-text">Appuie sur <strong>« Ajouter »</strong> — c'est fait !</div></div>
+  <button class="ios-close" id="iosCloseBtn" onclick="closeIosGuide()">Compris !</button>
 </div>
 
 <div class="drawer-overlay" id="drawerOverlay" onclick="closeDrawer()"></div>
@@ -1187,6 +1187,20 @@ function toggleLang() {
   // iOS guide
   const iosT = document.getElementById('iosGuideTitle');
   if(iosT) iosT.textContent = lang === 'en' ? 'Add to Home Screen' : "Ajouter à l'écran d'accueil";
+  const iosStep1 = document.getElementById('iosStep1');
+  if(iosStep1) iosStep1.querySelector('.ios-step-text').innerHTML = lang === 'en'
+    ? 'Tap the <strong>Share</strong> button at the bottom of Safari'
+    : 'Appuie sur le bouton <strong>Partager</strong> en bas de Safari';
+  const iosStep2 = document.getElementById('iosStep2');
+  if(iosStep2) iosStep2.querySelector('.ios-step-text').innerHTML = lang === 'en'
+    ? 'Tap <strong>"Add to Home Screen"</strong>'
+    : 'Appuie sur <strong>« Sur l’écran d’accueil »</strong>';
+  const iosStep3 = document.getElementById('iosStep3');
+  if(iosStep3) iosStep3.querySelector('.ios-step-text').innerHTML = lang === 'en'
+    ? 'Tap <strong>"Add"</strong> — done!'
+    : 'Appuie sur <strong>« Ajouter »</strong> — c’est fait !';
+  const iosCloseBtn = document.getElementById('iosCloseBtn');
+  if(iosCloseBtn) iosCloseBtn.textContent = lang === 'en' ? 'Got it!' : 'Compris !';
   // Re-render everything with new language
   render(); // render() calls renderLegend, renderNowBanner, renderTimeline, renderDayTabs
   renderCountdown();
