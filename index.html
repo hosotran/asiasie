@@ -254,15 +254,15 @@
   }
 
   /* INSTALL BANNER */
-  #install-bar { background: #1a1208; color: #fff; padding: 12px 16px; display: none; align-items: center; gap: 12px; border-bottom: 2px solid var(--orange); position: sticky; top: 0; z-index: 51; }
+  #install-bar { background: #f5f3f2; color: #1a1208; padding: 14px 16px; display: none; align-items: center; gap: 12px; border-bottom: 2px solid var(--orange); position: sticky; top: 0; z-index: 51; }
   #install-bar.visible { display: flex; }
-  .install-icon { font-size: 22px; flex-shrink: 0; }
+  .install-icon { font-size: 24px; flex-shrink: 0; }
   .install-text { flex: 1; min-width: 0; }
-  .install-text strong { font-size: 12px; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; display: block; color: #fff; }
-  .install-text span { font-size: 11px; opacity: 0.65; color: #fff; }
-  .install-btn { background: var(--orange); color: #fff; border: none; border-radius: 20px; padding: 9px 18px; font-size: 12px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .install-text strong { font-size: 14px; font-weight: 900; letter-spacing: 0.04em; text-transform: uppercase; display: block; color: #1a1208; }
+  .install-text span { font-size: 12px; color: #1a1208; opacity: 0.7; }
+  .install-btn { background: var(--orange); color: #fff; border: none; border-radius: 20px; padding: 10px 20px; font-size: 13px; font-weight: 900; letter-spacing: 0.06em; text-transform: uppercase; cursor: pointer; white-space: nowrap; flex-shrink: 0; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
   .install-btn:active { opacity: 0.85; }
-  .install-dismiss { background: transparent; border: none; color: rgba(255,255,255,0.5); font-size: 22px; cursor: pointer; padding: 0 4px; flex-shrink: 0; line-height: 1; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
+  .install-dismiss { background: transparent; border: none; color: rgba(26,18,8,0.4); font-size: 24px; cursor: pointer; padding: 0 4px; flex-shrink: 0; line-height: 1; -webkit-tap-highlight-color: transparent; touch-action: manipulation; }
 
   /* iOS GUIDE */
   #ios-guide { position: fixed; bottom: 0; left: 0; right: 0; background: var(--cream); border-radius: 16px 16px 0 0; border-top: 1.5px solid var(--text); z-index: 200; padding: 20px 20px calc(20px + env(safe-area-inset-bottom,0px)); transform: translateY(100%); transition: transform 0.32s cubic-bezier(0.32,0.72,0,1); }
@@ -921,7 +921,7 @@ function renderTimeline(){
       favsHtml += `<div class="hour-label" style="margin-top:${di>0?'20px':'0'}">${day.label.toUpperCase()}</div>`;
       dayEvs.forEach((ev,idx)=>{
         const st = evStatus(ev);
-        const lieu = LIEUX.find(l=>l.key===ev.lieu);
+        const lieu = getLieux().find(l=>l.key===ev.lieu);
         favsHtml += buildEventCard(ev, idx, st, lieu, day.date);
       });
     });
@@ -939,7 +939,7 @@ function renderTimeline(){
   evs.forEach((ev,idx)=>{
     const h=ev.start.split(":")[0]+"h";
     if(h!==lastH){html+=`<div class="hour-label">${h}</div>`;lastH=h;}
-    const st=evStatus(ev), lieu=LIEUX.find(l=>l.key===ev.lieu);
+    const st=evStatus(ev), lieu=getLieux().find(l=>l.key===ev.lieu);
     html += buildEventCard(ev, idx, st, lieu, getDays()[activeDay].date);
   });
   c.innerHTML=html;
@@ -986,7 +986,7 @@ function openDrawer(date, evId){
   currentDrawerEvId = evId;
   const lieu=getLieux().find(l=>l.key===ev.lieu), st=evStatus(ev);
   const bc={scene:"b-scene",atelier:"b-atelier",eaton:"b-eaton"}[ev.lieu]||"";
-  const lieuData=LIEUX.find(l=>l.key===ev.lieu);
+  const lieuData=getLieux().find(l=>l.key===ev.lieu);
   const faved = isFav(ev.id);
 
   const evImg = {"j01": "cbc-photobooth", "j02": "dj-shota", "j03": "ceremonie-ouverture", "j04": "performances-ouverture", "j05": "atelier-sake", "v01": "atelier-matcha", "v02": "dj-mando-vaselina", "v03": "open-mic", "v04": "atelier-sake", "v05": "dj-mando-vaselina", "s01": "festival-acces-asie", "s02": "table-ronde", "s03": "atelier-the", "s04": "balterz-rpd", "s05": "arashi-daiko", "s06": "avq", "s07": "tenues-traditionnelles", "s08": "dj-shota", "s09": "atelier-sake", "s10": "atelier-sake", "s11": "cbc-photobooth", "d01": "danse-lion", "d03": "table-ronde", "d04": "atelier-matcha", "d05": "veils-of-bollywood", "d06": "atelier-nerikiri", "d07": "veils-of-bollywood"};
@@ -1008,7 +1008,20 @@ function openDrawer(date, evId){
   `;
 
   const dc="d"+activeDay;
-  const tags=(ev.tags||[]).map(t=>`<span class="drawer-tag ${dc}">${t}</span>`).join("");
+  const TAG_MAP = {
+    'Gratuit':'Free','Tout public':'All ages','Musique':'Music','Danse':'Dance',
+    'Places limitées':'Limited spots','Dégustation':'Tasting','Japon':'Japan',
+    'Cérémonie':'Ceremony','Arts de la scène':'Performing Arts','Communauté':'Community',
+    'Discussion':'Discussion','Diaspora':'Diaspora','Thé':'Tea','Asie':'Asia',
+    'Chine':'China','Inde':'India','Tradition':'Tradition','Arts martiaux':'Martial Arts',
+    'Percussion':'Percussion','Taïko':'Taiko','Vietnam':'Vietnam','K-pop':'K-pop',
+    'J-pop':'J-pop','Mode':'Fashion','Patrimoine':'Heritage','Défilé':'Showcase',
+    'Société':'Society','Participatif':'Participatory','Scène ouverte':'Open stage',
+    'Artisanat':'Craft','Wagashi':'Wagashi','Bollywood':'Bollywood',
+    'Spoken word':'Spoken word','Hip-hop':'Hip-hop','Photo':'Photo',
+  };
+  const translateTag = (t) => lang === 'en' ? (TAG_MAP[t] || t) : t;
+  const tags=(ev.tags||[]).map(t=>`<span class="drawer-tag ${dc}">${translateTag(t)}</span>`).join("");
   document.getElementById("drawerBody").innerHTML=`
     <div class="drawer-desc">${ev.desc||"Description à venir."}</div>
     ${tags?`<div class="drawer-tags">${tags}</div>`:""}
